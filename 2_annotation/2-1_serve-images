@@ -2,7 +2,8 @@
 # Enables cross-origin requests (CORS) so images can be accessed from external tools
 # (e.g. annotation interfaces or web apps) via URLs such as:
 # http://127.0.0.1:8001/SE-NM/SE-NM_1_2017-09-12_120000.jpg
-#
+
+
 # Used to link JSON annotations to image files for use in Label Studio.
 # The server maps URL paths directly to files within the specified ROOT directory.
 
