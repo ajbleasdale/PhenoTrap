@@ -1,17 +1,30 @@
 # Workflow
 
-## Pre-processing (Folder 1_preprocessing)
+## 1. Pre-processing (Folder 1_preprocessing)
 
 ### 
 #### 1-1_file-selection
 
-## Dataset Labelling (2_annotation)
+## 2. Dataset Labelling (2_annotation)
 
 
-## Segmentation Model Training (3_training)
+## 3. Segmentation Model Training (3_training)
 
-## Segmentation Inference (4_inference)
+## 4. Segmentation Inference (4_inference)
 
-## Model Applications (5_application)
+## 5. Model Applications (5_application)
 
-## Model Applications (6_visualisation)
+## 6. Model Applications (6_visualisation)
+
+
+
+
+## 1. 1_preprocessing (Pre-processing)
+
+### 
+#### 1-1_file-selection
+
+## 2. 2_annotation (Dataset Labelling)
+
+
+## 3_training (Model Training)
