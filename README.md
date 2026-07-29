@@ -1,7 +1,7 @@
 # Workflow
 
 ## 1. Pre-processing 
-### Folder - 1_preprocessing
+### 1_preprocessing
 
 
 ### 
@@ -12,7 +12,7 @@
 .
 
 
-## 3. Segmentation Model Training (3_training)
+## 3. Segmentation Model Training [3_training]
 .
 
 ## 4. Segmentation Inference (4_inference)
