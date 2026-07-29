@@ -2,12 +2,13 @@
 
 ## 1. Pre-processing 
 ### Folder - 1_preprocessing
-.
+
 
 ### 
 #### 1-1_file-selection
 
-## 2. Dataset Labelling (2_annotation)
+## 2. Dataset Labelling 
+### 2_annotation
 .
 
 
@@ -31,13 +32,3 @@
 .
 ..
 
-
-## 1_preprocessing (Pre-processing)
-
-### 
-#### 1-1_file-selection
-
-## 2_annotation (Dataset Labelling)
-
-
-## 3_training (Model Training)
