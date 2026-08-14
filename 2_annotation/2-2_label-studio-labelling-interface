@@ -1,0 +1,35 @@
+# Copy directly into Label Studio Labeling Interface Section
+
+<View>
+
+  <Header value="Select label and click the image to start"/>
+  <Image name="image" value="$image" zoom="true"/>
+
+  <PolygonLabels name="label" toName="image" strokeWidth="3" pointSize="small" opacity="0.75">
+    
+    
+
+ <Label value="ignore" background="#FFA39E"/>
+ <Label value="sky" background="#004cff"/>
+
+ <Label value="snow_ice" background="#a9d6f9"/>
+ <Label value="bare" background="#61000f"/>   
+    
+ <Label value="ericaceous_shrub" background="#efb0f7"/>
+ <Label value="briar_seedling" background="#ab21a7"/>
+ <Label value="graminoid" background="#10bbf4"/>
+ <Label value="forb" background="#d10000"/>
+ <Label value="fern" background="#fff70a"/>
+ <Label value="cryptogam" background="#270061"/>
+ <Label value="vine" background="#b75b06"/>
+ <Label value="broadleaf_evergreen" background="#83eb2d"/>
+ <Label value="conifer" background="#0c3b2d"/>
+ <Label value="broadleaf_deciduous" background="#00ff2a"/> 
+   
+    
+
+ <Label value="broadleaf_deciduous_winter" background="#a59692"/> 
+
+
+  </PolygonLabels>
+</View>
