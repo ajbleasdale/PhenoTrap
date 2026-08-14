@@ -11,8 +11,8 @@ SOURCE_DIR = r"root-to-image-directory"
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".tif", ".tiff"}
 # ==========================
 
-START_TIME = time(11, 30, 0)
-END_TIME = time(12, 30, 0)
+START_TIME = time(11, 30, 0) # For noon change to 12, 0, 0
+END_TIME = time(12, 30, 0) # For noon change to 12, 0, 0
 
 
 def get_exif_datetime(image_path: Path):
