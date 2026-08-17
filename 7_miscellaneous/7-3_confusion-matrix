@@ -1,0 +1,209 @@
+import os
+import pandas as pd
+import numpy as np
+import plotly.express as px
+
+# =============================================================================
+# CONFIG
+# =============================================================================
+excel_path = r"path-to-confusion-matrix.xlsx"
+sheet_name = 0
+
+GT_COL = "ground_truth_class"
+ROW_TOTAL_COL = "row_total_gt_pixels"
+PRED_PREFIX = "pred_"
+
+# Choose heatmap type: "percent" or "count"
+HEATMAP_MODE = "percent"
+
+# Output options
+SHOW_FIGURE = True
+SAVE_HTML = False
+SAVE_PNG = True
+output_png = r"\path-to-output-image.png"
+
+# Plot options
+FIG_WIDTH = 1200
+FIG_HEIGHT = 900
+TEXT_AUTO = ".1f" if HEATMAP_MODE == "percent" else True
+
+# Optional label cleanup
+REMOVE_GT_PREFIX = True
+REMOVE_PRED_PREFIX = True
+
+# =============================================================================
+# FONT SETTINGS
+# =============================================================================
+FONT_FAMILY = "Arial"
+
+TITLE_SIZE = 20
+AXIS_TITLE_SIZE = 22
+TICK_SIZE = 18
+CELL_TEXT_SIZE = 18
+COLOURBAR_TITLE_SIZE = 18
+COLOURBAR_TICK_SIZE = 18
+
+# =============================================================================
+# COLOUR MAP
+# =============================================================================
+COLOUR_SCALE = "ylgnbu_r"
+# Examples:
+# "Viridis"
+# "Plasma"
+# "Cividis"
+# "Blues"
+# "Greens"
+# "Reds"
+# "Greys"
+# "YlGnBu"
+# "Turbo"
+
+
+
+# =============================================================================
+# LOAD DATA
+# =============================================================================
+df = pd.read_excel(excel_path, sheet_name=sheet_name)
+
+required_cols = [GT_COL, ROW_TOTAL_COL]
+for col in required_cols:
+    if col not in df.columns:
+        raise ValueError(f"Required column not found: {col}")
+
+pred_cols = [c for c in df.columns if c.startswith(PRED_PREFIX)]
+if not pred_cols:
+    raise ValueError(f"No columns found starting with '{PRED_PREFIX}'")
+
+work_df = df[[GT_COL, ROW_TOTAL_COL] + pred_cols].copy()
+work_df = work_df.dropna(subset=[GT_COL])
+
+# Ensure numeric prediction columns
+pred_percent = work_df[pred_cols].apply(pd.to_numeric, errors="coerce").fillna(0)
+row_totals = pd.to_numeric(work_df[ROW_TOTAL_COL], errors="coerce").fillna(0)
+
+# =============================================================================
+# BUILD MATRIX
+# =============================================================================
+if HEATMAP_MODE.lower() == "percent":
+    matrix = pred_percent.copy()
+    colorbar_title = "Percent"
+    value_format = ".2f"
+
+elif HEATMAP_MODE.lower() == "count":
+    matrix = pred_percent.div(100.0).mul(row_totals, axis=0)
+    matrix = matrix.round()
+    colorbar_title = "Pixel count"
+    value_format = ".0f"
+
+else:
+    raise ValueError("HEATMAP_MODE must be 'percent' or 'count'")
+
+
+# =============================================================================
+# GREY OUT CLASSES WITH NO GROUND-TRUTH PIXELS
+# =============================================================================
+# Rows where there are no GT pixels should not be interpreted as zero
+no_gt_mask = row_totals == 0
+
+# Convert these rows to NaN.
+# Plotly will display NaN cells using the plot background colour.
+matrix.loc[no_gt_mask, :] = np.nan
+
+
+# =============================================================================
+# LABELS
+# =============================================================================
+row_labels = work_df[GT_COL].astype(str).tolist()
+col_labels = pred_cols.copy()
+
+if REMOVE_GT_PREFIX:
+    row_labels = [
+        x.replace("gt_", "", 1) if x.startswith("gt_") else x
+        for x in row_labels
+    ]
+
+if REMOVE_PRED_PREFIX:
+    col_labels = [
+        x.replace("pred_", "", 1) if x.startswith("pred_") else x
+        for x in col_labels
+    ]
+
+matrix.index = row_labels
+matrix.columns = col_labels
+
+
+# =============================================================================
+# PLOT
+# =============================================================================
+fig = px.imshow(
+    matrix,
+    text_auto=TEXT_AUTO,
+    aspect="auto",
+    color_continuous_scale=COLOUR_SCALE,
+    labels=dict(
+        x="Predicted class",
+        y="Ground truth class",
+        color=colorbar_title
+    ),
+)
+
+
+fig.update_layout(
+    width=FIG_WIDTH,
+    height=FIG_HEIGHT,
+
+    # NaN cells will appear this colour
+    plot_bgcolor="lightgrey",
+
+    font=dict(
+        family=FONT_FAMILY,
+        size=TICK_SIZE
+    ),
+
+    title=dict(
+        font=dict(size=TITLE_SIZE)
+    ),
+
+    xaxis=dict(
+        title_font=dict(size=AXIS_TITLE_SIZE),
+        tickfont=dict(size=TICK_SIZE),
+        tickangle=-90
+    ),
+
+    yaxis=dict(
+        title_font=dict(size=AXIS_TITLE_SIZE),
+        tickfont=dict(size=TICK_SIZE)
+    ),
+
+    coloraxis_colorbar=dict(
+        title=dict(font=dict(size=COLOURBAR_TITLE_SIZE)),
+        tickfont=dict(size=COLOURBAR_TICK_SIZE)
+    )
+)
+
+fig.update_traces(
+    textfont=dict(
+        family=FONT_FAMILY,
+        size=CELL_TEXT_SIZE
+    )
+)
+
+# =============================================================================
+# SAVE / SHOW
+# =============================================================================
+if SAVE_HTML:
+    outdir = os.path.dirname(output_html)
+    if outdir:
+        os.makedirs(outdir, exist_ok=True)
+    fig.write_html(output_html)
+    print(f"Saved HTML: {output_html}")
+
+if SAVE_PNG:
+    outdir = os.path.dirname(output_png)
+    if outdir:
+        os.makedirs(outdir, exist_ok=True)
+    fig.write_image(output_png)
+    print(f"Saved PNG: {output_png}")
+
+if SHOW_FIGURE:
+    fig.show()
