@@ -1,3 +1,5 @@
+# Renaming camera trap imagery with Excel
+
 Each camera trap project uses a different naming convention. A standardised naming convention has therefore been developed and applied to all images. 
 
 Examples of the naming format are provided below:
