@@ -1,0 +1,150 @@
+from pathlib import Path
+from PIL import Image, ExifTags
+import pandas as pd
+from tqdm import tqdm
+
+# =============================================================================
+# CONFIG
+# =============================================================================
+
+IMAGE_DIR = Path(
+    r"path-to-dataset-directory"
+)
+
+OUTPUT_CSV = Path(
+    r"path-to-output-csv.csv"
+)
+
+IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".JPG", ".JPEG"}
+
+# =============================================================================
+# EXIF TAG LOOKUP
+# =============================================================================
+
+EXIF_TAGS = {
+    tag_id: tag_name
+    for tag_id, tag_name in ExifTags.TAGS.items()
+}
+
+# =============================================================================
+# FUNCTION TO READ CAMERA INFORMATION
+# =============================================================================
+
+def get_camera_info(image_path):
+    """
+    Extract camera Make and Model from image EXIF metadata.
+    """
+
+    make = None
+    model = None
+
+    try:
+        with Image.open(image_path) as img:
+
+            exif = img.getexif()
+
+            if exif:
+                for tag_id, value in exif.items():
+
+                    tag_name = EXIF_TAGS.get(tag_id, tag_id)
+
+                    if tag_name == "Make":
+                        make = str(value).strip()
+
+                    elif tag_name == "Model":
+                        model = str(value).strip()
+
+    except Exception:
+        pass
+
+    return make, model
+
+
+# =============================================================================
+# FIND IMAGES
+# =============================================================================
+
+image_files = [
+    path
+    for path in IMAGE_DIR.rglob("*")
+    if path.is_file() and path.suffix in IMAGE_EXTENSIONS
+]
+
+print(f"Found {len(image_files):,} images")
+
+# =============================================================================
+# READ CAMERA METADATA
+# =============================================================================
+
+records = []
+
+for image_path in tqdm(image_files, desc="Reading EXIF metadata"):
+
+    make, model = get_camera_info(image_path)
+
+    records.append({
+        "filename": image_path.name,
+        "relative_path": str(image_path.relative_to(IMAGE_DIR)),
+        "folder": image_path.parent.name,
+        "camera_make": make,
+        "camera_model": model
+    })
+
+# =============================================================================
+# CREATE DATAFRAME
+# =============================================================================
+
+df = pd.DataFrame(records)
+
+# Replace missing values with something explicit
+df["camera_make"] = df["camera_make"].fillna("Unknown")
+df["camera_model"] = df["camera_model"].fillna("Unknown")
+
+# =============================================================================
+# SAVE FULL IMAGE-LEVEL RESULTS
+# =============================================================================
+
+OUTPUT_CSV.parent.mkdir(parents=True, exist_ok=True)
+
+df.to_csv(
+    OUTPUT_CSV,
+    index=False,
+    encoding="utf-8-sig"
+)
+
+print(f"\nSaved image-level camera information to:")
+print(OUTPUT_CSV)
+
+# =============================================================================
+# SUMMARY OF CAMERA MODELS
+# =============================================================================
+
+summary = (
+    df.groupby(
+        ["camera_make", "camera_model"],
+        dropna=False
+    )
+    .size()
+    .reset_index(name="image_count")
+    .sort_values(
+        "image_count",
+        ascending=False
+    )
+)
+
+print("\nCamera models found:")
+print(summary.to_string(index=False))
+
+# Optional separate summary CSV
+SUMMARY_CSV = OUTPUT_CSV.with_name(
+    OUTPUT_CSV.stem + "_summary.csv"
+)
+
+summary.to_csv(
+    SUMMARY_CSV,
+    index=False,
+    encoding="utf-8-sig"
+)
+
+print(f"\nSaved camera-model summary to:")
+print(SUMMARY_CSV)
