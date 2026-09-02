@@ -18,26 +18,22 @@
 #### 2-3_JSON-combiner
 #### 2-4_JSON-reclass
 
-.
 
 
-## 3. Segmentation Model Training [3_training]
-.
 
-## 4. Segmentation Inference (4_inference)
-.
+## 3. Segmentation Model Training 
+### 3_training
 
-## 5. Model Applications (5_application)
-.
-
-## 6. Model Applications (6_visualisation)
+## 4. Segmentation Inference 
+### 4_inference
 
 
-.
-.
-.
-.
-.
-.
-..
+## 5. Model Applications 
+### 5_application
 
+
+## 6. Model Applications Graphical Visualisations
+### 6_visualisation
+
+## 7. Miscellaneous Helper Code
+### 7_miscellaneous
