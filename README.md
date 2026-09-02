@@ -7,6 +7,11 @@
 ### 
 #### 1-1_timelapse-selection
 #### 1-2_file-rename
+
+Renaming is performed before cropping to:
+allow cross-referencing of filenames with camera records (date and time)
+avoid potential issues caused by loss or modification of image metadata during processing
+
 #### 1-3_header-footer-removal
 #### 1-4_quality-control
 
