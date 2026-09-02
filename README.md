@@ -12,10 +12,11 @@
 
 
 ## 2. Dataset Labelling 
-### 2-1_serve-images (optional for HITL labelling)
-### 2-2_label-studio-interface (for implementation into Label Studio software)
-### 2-3_JSON-combiner
-### 2-4_JSON-reclass
+### 2_annotation
+#### 2-1_serve-images (optional for HITL labelling)
+#### 2-2_label-studio-interface (for implementation into Label Studio software)
+#### 2-3_JSON-combiner
+#### 2-4_JSON-reclass
 
 .
 
