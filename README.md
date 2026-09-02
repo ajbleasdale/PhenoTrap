@@ -2,9 +2,8 @@
 
 ## 1. Pre-processing 
 ### 1_preprocessing
+The following steps outline the preprocessing workflow for camera trap imagery used in the PhenoTrap package. This pipeline selects timelapse images, standardises filenames, and prepares images for downstream annotation, training and inference.
 
-
-### 
 #### 1-1_timelapse-selection
 #### 1-2_file-rename
 
