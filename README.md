@@ -30,10 +30,10 @@ Several of these scripts are optional depending on the labelling procedure
 ## Workflow
 Run scripts in the following order
 ### 1_preprocessing
-#### 1-1_timelapse-selection.py
-#### 1-2_file-rename.py
-#### 1-3_header-footer-removal.py
-#### 1-4_quality-control.py
+##### 1-1_timelapse-selection.py
+##### 1-2_file-rename.py
+##### 1-3_header-footer-removal.py
+##### 1-4_quality-control.py
 
 
 
