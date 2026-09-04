@@ -38,10 +38,10 @@ Run scripts in the following order
 
 
 ### 2_annotation
-#### 2-1_serve-images.py (optional for HITL labelling)
-#### 2-2_label-studio-interface for implementation into Label Studio software - Not to run in Python 
-#### 2-3_JSON-combiner.py
-#### 2-4_JSON-reclass.py
+##### 2-1_serve-images.py (optional for HITL labelling)
+##### 2-2_label-studio-interface for implementation into Label Studio software - Not to run in Python 
+##### 2-3_JSON-combiner.py
+##### 2-4_JSON-reclass.py
 
 
 
