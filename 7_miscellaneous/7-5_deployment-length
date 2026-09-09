@@ -1,0 +1,237 @@
+from pathlib import Path
+from datetime import datetime, timedelta
+import pandas as pd
+import re
+
+# ============================================================
+# CONFIG
+# ============================================================
+
+# Folder containing the images
+IMAGE_FOLDER = Path(
+    r"PATH-TO-FOLDER-ROOT"
+)
+
+# Output CSV
+OUTPUT_CSV = Path(
+    r"PATH-TO-OUTPUT-CSV.csv"
+)
+
+# Search inside subfolders too
+RECURSIVE = True
+
+# Expected time between images.
+# Examples:
+# 30 = one image every 30 minutes
+# 60 = one image every hour
+# 1440 = one image every day
+EXPECTED_INTERVAL_MINUTES = 1440
+
+# Image extensions to include
+IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".tif", ".tiff"}
+
+
+# ============================================================
+# FILENAME FORMAT
+# ============================================================
+
+# Expected format:
+#
+# SE-NM_1_2024-07-08_120000.JPG
+#
+# Deployment ID = SE-NM_1
+# Date          = 2024-07-08
+# Time          = 12:00:00
+#
+# Everything before _YYYY-MM-DD_HHMMSS is treated as the
+# deployment ID.
+
+filename_pattern = re.compile(
+    r"^(?P<deployment_id>.+?)_"
+    r"(?P<date>\d{4}-\d{2}-\d{2})_"
+    r"(?P<time>\d{6})$"
+)
+
+
+# ============================================================
+# FIND IMAGES
+# ============================================================
+
+if RECURSIVE:
+    files = [
+        f for f in IMAGE_FOLDER.rglob("*")
+        if f.is_file() and f.suffix.lower() in IMAGE_EXTENSIONS
+    ]
+else:
+    files = [
+        f for f in IMAGE_FOLDER.iterdir()
+        if f.is_file() and f.suffix.lower() in IMAGE_EXTENSIONS
+    ]
+
+print(f"Found {len(files):,} image files.")
+
+
+# ============================================================
+# READ FILENAMES
+# ============================================================
+
+records = []
+unreadable_files = []
+
+for file in files:
+
+    # Remove extension
+    stem = file.stem
+
+    match = filename_pattern.match(stem)
+
+    if match is None:
+        unreadable_files.append(file.name)
+        continue
+
+    deployment_id = match.group("deployment_id")
+    date_text = match.group("date")
+    time_text = match.group("time")
+
+    try:
+        timestamp = datetime.strptime(
+            f"{date_text}_{time_text}",
+            "%Y-%m-%d_%H%M%S"
+        )
+
+    except ValueError:
+        # Invalid date/time in filename
+        unreadable_files.append(file.name)
+        continue
+
+    records.append({
+        "deployment_id": deployment_id,
+        "timestamp": timestamp,
+        "filename": file.name
+    })
+
+
+if not records:
+    raise ValueError(
+        "No valid image filenames were found. "
+        "Check the filename structure and IMAGE_FOLDER."
+    )
+
+
+df = pd.DataFrame(records)
+
+
+# ============================================================
+# SUMMARISE EACH DEPLOYMENT
+# ============================================================
+
+summary_rows = []
+
+expected_interval = timedelta(
+    minutes=EXPECTED_INTERVAL_MINUTES
+)
+
+for deployment_id, group in df.groupby("deployment_id"):
+
+    group = group.sort_values("timestamp")
+
+    start_datetime = group["timestamp"].min()
+    end_datetime = group["timestamp"].max()
+
+    number_of_images = len(group)
+
+    # --------------------------------------------------------
+    # Deployment duration
+    # --------------------------------------------------------
+
+    deployment_duration = end_datetime - start_datetime
+
+    deployment_length_days = (
+        deployment_duration.total_seconds() / 86400
+    )
+
+    # --------------------------------------------------------
+    # Expected number of images
+    # --------------------------------------------------------
+    #
+    # +1 because both the first and last timestamps count as
+    # expected images.
+    #
+
+    expected_images = (
+        int(
+            deployment_duration.total_seconds()
+            // expected_interval.total_seconds()
+        )
+        + 1
+    )
+
+    missing_images = max(
+        0,
+        expected_images - number_of_images
+    )
+
+    summary_rows.append({
+        "deployment_id": deployment_id,
+
+        "start_date": start_datetime.date(),
+        "end_date": end_datetime.date(),
+
+        "start_datetime": start_datetime,
+        "end_datetime": end_datetime,
+
+        "deployment_length_days": round(
+            deployment_length_days,
+            2
+        ),
+
+        "number_of_images": number_of_images,
+        "expected_number_of_images": expected_images,
+        "number_of_missing_images": missing_images
+    })
+
+
+summary_df = pd.DataFrame(summary_rows)
+
+summary_df = summary_df.sort_values(
+    "deployment_id"
+)
+
+
+# ============================================================
+# EXPORT CSV
+# ============================================================
+
+OUTPUT_CSV.parent.mkdir(
+    parents=True,
+    exist_ok=True
+)
+
+summary_df.to_csv(
+    OUTPUT_CSV,
+    index=False
+)
+
+print()
+print("Finished.")
+print(f"Deployments found: {len(summary_df):,}")
+print(f"Summary saved to:")
+print(OUTPUT_CSV)
+
+
+# ============================================================
+# REPORT FILENAMES THAT COULD NOT BE READ
+# ============================================================
+
+if unreadable_files:
+
+    print()
+    print(
+        f"WARNING: {len(unreadable_files):,} files "
+        "could not be interpreted."
+    )
+
+    print("First 20 unreadable filenames:")
+
+    for filename in unreadable_files[:20]:
+        print(f"  {filename}")
