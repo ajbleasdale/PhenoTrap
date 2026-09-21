@@ -89,11 +89,11 @@ This stage fine-tunes the semantic segmentation model using the annotated and pa
 
 Run the required scripts in the following order:
 
-**`3-1_PhenoTrap-training.py`** – Fine-tunes the segmentation model using the prepared training and validation datasets. Training progress, model performance and experimental parameters are recorded during training, and trained model checkpoints are saved for subsequent inference.
-**`3-2_experiment-log-analysis.py`** – Optional. Summarises and visualises results recorded across training experiments to assist with comparison of model configurations and training performance.
-Experiment log
+1. **`3-1_PhenoTrap-training.py`** – Fine-tunes the segmentation model using the prepared training and validation datasets. Training progress, model performance and experimental parameters are recorded during training, and trained model checkpoints are saved for subsequent inference.
+2. **`3-2_experiment-log-analysis.py`** – Optional. Summarises and visualises results recorded across training experiments to assist with comparison of model configurations and training performance.
 
-experiment-log.xlsx – Template used by the training script to record experimental settings and model performance. Download and save a copy of this file in the experiment directory before training to ensure that results are logged correctly.
+
+**`experiment-log.xlsx`** – Template used by the training script to record experimental settings and model performance. Download and save a copy of this file in the experiment directory before training to ensure that results are logged correctly.
 
 The trained model checkpoint produced during this stage is used for segmentation inference in Section 4.
 
