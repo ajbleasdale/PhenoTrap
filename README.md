@@ -1,4 +1,10 @@
-# README
+# PhenoTrap
+
+PhenoTrap is a workflow for semantic segmentation of fixed camera-trap imagery
+for vegetation and phenological monitoring. The workflow covers image
+pre-processing, semantic annotation, model training, inference, and extraction
+of ecological metrics from classified imagery.
+
 
 ## 1. Pre-processing 
 The following steps outline the preprocessing workflow for camera trap imagery used in the PhenoTrap package. This pipeline selects timelapse images, standardises filenames, and prepares images for downstream annotation, training and inference.
