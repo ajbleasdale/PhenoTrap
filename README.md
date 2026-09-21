@@ -81,7 +81,8 @@ Run the required scripts in the following order:
    segmentation masks.
 6. **`2-6_dataset-partition.py`** – Partitions the labelled dataset for model
    development.
-7. **`2-7_HITL-mask-to-JSON.py`** – [explanation]
+7. **`2-7_HITL-mask-to-JSON.py`** 
+8. **`2-8_create-mask-image-index.py`**
    
 
 ## 3. Segmentation Model Training 
