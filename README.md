@@ -62,7 +62,7 @@ Run the required scripts in the following order:
 
 5. **`1-5a_image-selection-random.py`** – Randomly selects images from the pre-processed dataset for subsequent annotation.
 
-6. **`1-5b_image-selection-exclusionary.py`** – **Optional alternative to `1-5a`.** Selects images while excluding specified images or image groups from the selection process.
+6. **`1-5b_image-selection-exclusionary.py`** – **Optional alternative to `1-5a`.** Selects images while preventing images from the same deployment entering the annotation sample.
 
 
 
