@@ -1,5 +1,5 @@
 # ==========================================================
-# Single-class GCC curve for single dataset
+# Single-site Single-class GCC curve
 # ==========================================================
 
 from pathlib import Path
