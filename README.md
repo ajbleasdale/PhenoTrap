@@ -47,7 +47,8 @@ Renaming is performed before cropping to:
 allow cross-referencing of filenames with camera records (date and time)
 avoid potential issues caused by loss or modification of image metadata during processing
 
-## 2. Dataset Labelling 
+Run the required scripts in the following order:
+
 
 ## 2. Dataset labelling
 
@@ -180,3 +181,4 @@ Additional documentation is available in the `documentation` directory:
 
 - [Naming convention](Documentation/1_naming-convention.md)
 - [Quality control](Documentation/2_quality-control.md)
+- [Label definitions](Documentation/3_label-definitions.md)
