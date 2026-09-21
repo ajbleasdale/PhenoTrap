@@ -26,7 +26,7 @@ PhenoTrap/ <br/>
 PyTorch <br/> 
 Torchvision <br/> 
 NumPy <br/> 
-pandas <br/>  
+pandas <br/>
 Pillow <br/>
 OpenCV <br/>
 Albumentations <br/>
