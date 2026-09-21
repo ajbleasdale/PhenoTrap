@@ -196,9 +196,9 @@ Run scripts in the following order
 
 Additional documentation is available in the `documentation` directory:
 
-- [Naming convention](Documentation/1_naming-convention.md)
-- [Quality control](Documentation/2_quality-control.md)
-- [Label definitions](Documentation/3_label-definitions.md)
+- [Naming Convention](Documentation/1_naming-convention.md)
+- [Quality Control](Documentation/2_quality-control.md)
+- [Label Definitions](Documentation/3_label-definitions.md)
 
 ## Acknowledgements
 
