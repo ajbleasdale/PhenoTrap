@@ -34,7 +34,8 @@ Run scripts in the following order
 ##### 1-2_file-rename.py
 ##### 1-3_header-footer-removal.py
 ##### 1-4_quality-control.py
-
+##### 1-5a_image-selection-random.py
+##### 1-5b_image-selection-exclusionary.py (for use if certain images are to be avoided)
 
 
 ### 2_annotation
@@ -42,6 +43,10 @@ Run scripts in the following order
 ##### 2-2_label-studio-interface for implementation into Label Studio software - Not to run in Python 
 ##### 2-3_JSON-combiner.py
 ##### 2-4_JSON-reclass.py
+##### 2-5_JSON-to-PNG-mask.py
+##### 2-6_dataset-partition.py
+##### 2-7_HITL-mask-to-JSON.py
+
 
 
 
