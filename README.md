@@ -69,19 +69,19 @@ the human-in-the-loop (HITL) workflow.
 
 Run the required scripts in the following order:
 
-1. `2-1_serve-images.py` – Optional; serves images for HITL annotation or when
+1. **`2-1_serve-images.py`** – Optional; serves images for HITL annotation or when
    transferring the annotation dataset to another computer.
-2. `2-2_label-studio-interface` – Label Studio interface configuration. This is
+2. **`2-2_label-studio-interface`** – Label Studio interface configuration. This is
    imported into Label Studio and is not run as a Python script. See [Label definitions](Documentation/3_label-definitions.md) for further details.
-3. `2-3_JSON-combiner.py` – Optional; combines annotations exported from
+3. **`2-3_JSON-combiner.py`** – Optional; combines annotations exported from
    multiple Label Studio projects.
-4. `2-4_JSON-reclass.py` – Optional; renames classes or merges multiple
+4. **`2-4_JSON-reclass.py`** – Optional; renames classes or merges multiple
    annotation classes.
-5. `2-5_JSON-to-PNG-mask.py` – Converts Label Studio JSON annotations to
+5. **`2-5_JSON-to-PNG-mask.py`** – Converts Label Studio JSON annotations to
    segmentation masks.
-6. `2-6_dataset-partition.py` – Partitions the labelled dataset for model
+6. **`2-6_dataset-partition.py`** – Partitions the labelled dataset for model
    development.
-7. `2-7_HITL-mask-to-JSON.py` – [explanation]
+7. **`2-7_HITL-mask-to-JSON.py`** – [explanation]
    
 
 ## 3. Segmentation Model Training 
@@ -89,8 +89,8 @@ This stage fine-tunes the semantic segmentation model using the annotated and pa
 
 Run the required scripts in the following order:
 
-'3-1_PhenoTrap-training.py' – Fine-tunes the segmentation model using the prepared training and validation datasets. Training progress, model performance and experimental parameters are recorded during training, and trained model checkpoints are saved for subsequent inference.
-'3-2_experiment-log-analysis.py' – Optional. Summarises and visualises results recorded across training experiments to assist with comparison of model configurations and training performance.
+**`3-1_PhenoTrap-training.py`** – Fine-tunes the segmentation model using the prepared training and validation datasets. Training progress, model performance and experimental parameters are recorded during training, and trained model checkpoints are saved for subsequent inference.
+**`3-2_experiment-log-analysis.py`** – Optional. Summarises and visualises results recorded across training experiments to assist with comparison of model configurations and training performance.
 Experiment log
 
 experiment-log.xlsx – Template used by the training script to record experimental settings and model performance. Download and save a copy of this file in the experiment directory before training to ensure that results are logged correctly.
