@@ -22,13 +22,16 @@ PhenoTrap/ <br/>
 ## Installation
 
 ### Requirements
-- Python
+#### Python
 - PyTorch
 - Torchvision
 - OpenCV
 - Pillow
 - pandas
 - NumPy
+
+#### Label Studio 
+ind further details for installation at https://labelstud.io/
 
 ## Repository Structure
 The expected input strucure is as follows: <br/>
