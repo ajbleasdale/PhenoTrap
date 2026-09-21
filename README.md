@@ -170,62 +170,6 @@ metadata to add and save update metadata
 
 
 
-## Workflow
-Run scripts in the following order
-### 1_preprocessing
-##### 1-1_timelapse-selection.py
-##### 1-2_file-rename.py
-##### 1-3_header-footer-removal.py
-##### 1-4_quality-control.py
-##### 1-5a_image-selection-random.py
-##### 1-5b_image-selection-exclusionary.py (for use if certain images are to be avoided)
-
-
-### 2_annotation
-##### 2-1_serve-images.py (optional for HITL labelling)
-##### 2-2_label-studio-interface (for implementation into Label Studio software - Not to run in Python)
-##### 2-3_JSON-combiner.py
-##### 2-4_JSON-reclass.py
-##### 2-5_JSON-to-PNG-mask.py
-##### 2-6_dataset-partition.py
-##### 2-7_HITL-mask-to-JSON.py
-
-
-
-
-### 3_training
-##### 3-1_PhenoTrap-training.py
-##### 3-2_experiment-log-analysis.py
-##### experiment-log.xlsx (to download for saving experimental log data)
-
-
-### 4_inference
-##### 4-1_PhenoTrap-inferance.py
-##### 4-2_class-ROI-isolation.py
-##### 4-3_organise-ROI-to-class-folder.py
-##### 4-4a_quanitfy-class-from-model.py
-##### 4-4b_quanitfy-class-from-mask.py
-##### 4-5_reverse-ROI-to-mask.py (emergency retrieval of single-channel masks)
-
-### 5_application
-#### 5-1a_dataset-scene-composition.py
-#### 5-1b_deployment-scene-composition.py
-#### 5-2a_snow-cover.py
-#### 5-2b_snow-cover-comparison.py
-#### 5-3a_GCC-SS-SC-annual.py
-#### 5-3b_GCC-SS-MC-annual.py
-#### 5-3c_GCC-MS-SC-annual.py
-#### 5-3d_GCC-MS-MC-annual.py
-#### 5-3e_GCC-MS-MC-continuous.py
-#### 5-4a_GCC-breakpoints-threshold.py
-#### 5-4b_GCC-breakpoints-slope.py
-
-
-
-
-### 6_utilities
-
-
 ## Model Availability
 
 
