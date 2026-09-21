@@ -20,14 +20,14 @@ Inference from PhenoTrap can be utilised for monitoring habitat scene compositio
 - NumPy
 
 
-The expected input strucure is as follows
-input/
+The expected input strucure is as follows: <br/>
+input/ <br/>
 ├── site-1/ <br/> 
 │  ├── BE-LE_40_2023-04-12_160000.JPG <br/> 
-│  └── BE-LE_532_2024-08-13_160000.JPG
-└── site-2/
-   ├── SE-NM_111_2020_03_24_120000.JPG
-   └── SE-NM_43_2021_12_24_120000.JPG
+│  └── BE-LE_532_2024-08-13_160000.JPG <br/>
+└── site-2/ <br/>
+   ├── SE-NM_111_2020_03_24_120000.JPG <br/>
+   └── SE-NM_43_2021_12_24_120000.JPG <br/>
 
 
 ## 1. Pre-processing 
