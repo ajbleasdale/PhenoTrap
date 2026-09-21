@@ -23,20 +23,20 @@ PhenoTrap/ <br/>
 
 ### Requirements
 #### Python
-PyTorch
-Torchvision
-NumPy
-pandas
-Pillow
-OpenCV
-Albumentations
-tqdm
-Matplotlib
-SciPy
-Plotly
-OpenPyXL
-Flask
-Flask-CORS
+PyTorch <br/> 
+Torchvision <br/> 
+NumPy <br/> 
+pandas <br/>  
+Pillow <br/>
+OpenCV <br/>
+Albumentations <br/>
+tqdm <br/>
+Matplotlib <br/>
+SciPy <br/>
+Plotly <br/>
+OpenPyXL <br/>
+Flask <br/>
+Flask-CORS <br/>
 
 Dependencies can be installed using the provided requirements.txt file:
 
