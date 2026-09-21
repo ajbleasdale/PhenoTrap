@@ -38,14 +38,10 @@ OpenPyXL <br/>
 Flask <br/>
 Flask-CORS <br/>
 
-Dependencies can be installed using the provided requirements.txt file:
-
-pip install -r requirements.txt
-
+Dependencies can be installed using the provided requirements.txt file: pip install -r requirements.txt
 A CUDA-compatible GPU is recommended for model training and inference using PyTorch. CPU execution may be possible but will be considerably slower for these stages.
 
 
-pip install -r requirements.txt
 #### Label Studio 
 ind further details for installation at https://labelstud.io/
 
