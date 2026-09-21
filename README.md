@@ -201,3 +201,5 @@ Additional documentation is available in the `documentation` directory:
 - [Label definitions](Documentation/3_label-definitions.md)
 
 ## Acknowledgements
+
+The computations/data handling were enabled by resources provided by the National Academic Infrastructure for Supercomputing in Sweden (NAISS) at C3SE, on the Alvis cluster, partially funded by the Swedish Research Council (grant agreement no. 2022-06725).
