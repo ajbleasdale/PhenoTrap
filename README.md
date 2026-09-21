@@ -43,7 +43,7 @@ A CUDA-compatible GPU is recommended for model training and inference using PyTo
 
 
 #### Label Studio 
-ind further details for installation at https://labelstud.io/
+further details for installation at https://labelstud.io/
 
 ## Repository Structure
 The expected input strucure is as follows: <br/>
