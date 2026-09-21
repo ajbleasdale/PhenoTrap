@@ -1,0 +1,14 @@
+Flask
+flask-cors
+Pillow
+pandas
+opencv-python
+numpy
+torch
+torchvision
+tqdm
+albumentations
+openpyxl
+matplotlib
+scipy
+plotly
