@@ -5,7 +5,23 @@ for vegetation and phenological monitoring. The workflow covers image
 pre-processing, semantic annotation, model training, inference, and extraction
 of ecological metrics from classified imagery.
 
+PhenoTrap fine-tunes a DeeplabV3/ResNet-101 CNN to isolate 13 unique environmental and vegetation classes. 
+Inference from PhenoTrap can be utilised for monitoring habitat scene composition, snow cover analysis and vegetation greenup
 
+## Installation
+
+### Requirements
+- Python
+- PyTorch
+- Torchvision
+- OpenCV
+- Pillow
+- pandas
+- NumPy
+
+
+### Installation
+[Your installation instructions]
 ## 1. Pre-processing 
 The following steps outline the preprocessing workflow for camera trap imagery used in the PhenoTrap package. This pipeline selects timelapse images, standardises filenames, and prepares images for downstream annotation, training and inference.
 
