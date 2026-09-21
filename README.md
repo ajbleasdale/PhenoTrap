@@ -178,5 +178,5 @@ Run scripts in the following order
 
 Additional documentation is available in the `documentation` directory:
 
-- [Naming convention](documentation/1_naming-convention.md)
-- [Quality control](documentation/2_quality-control.md)
+- [Naming convention](Documentation/1_naming-convention.md)
+- [Quality control](Documentation/2_quality-control.md)
