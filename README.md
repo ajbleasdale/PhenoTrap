@@ -6,7 +6,17 @@ pre-processing, semantic annotation, model training, inference, and extraction
 of ecological metrics from classified imagery.
 
 PhenoTrap fine-tunes a DeeplabV3/ResNet-101 CNN to isolate 13 unique environmental and vegetation classes. 
-Inference from PhenoTrap can be utilised for monitoring habitat scene composition, snow cover analysis and vegetation greenup
+Inference from PhenoTrap can be utilised for monitoring habitat scene composition, snow cover analysis and vegetation greenup <br/>
+
+PhenoTrap/ <br/>
+├── 1_preprocessing/ <br/>
+├── 2_annotation/ <br/>
+├── 3_training/ <br/>
+├── 4_inference/ <br/>
+├── 5_application/ <br/>
+├── 6_utilities/ <br/>
+├── documentation/ <br/>
+└── README.md
 
 ## Installation
 
@@ -39,11 +49,28 @@ avoid potential issues caused by loss or modification of image metadata during p
 
 ## 2. Dataset Labelling 
 
-Several of these scripts are optional depending on the labelling procedure
-2-1_serve-images.py - optional for HITL labelling or moving dataset to a new PC
-2-2_label-studio-interface for implementation into Label Studio software - Not to run in Python
-2-3_JSON-combiner.py - run if using multiple smaller label-studio projects
-2-4_JSON-reclass.py - use for renaming classes or combining multiple classes into a single class
+## 2. Dataset labelling
+
+This stage converts selected camera-trap images into semantic segmentation
+training data. Images can be annotated manually in Label Studio or through
+the human-in-the-loop (HITL) workflow.
+
+Run the required scripts in the following order:
+
+1. `2-1_serve-images.py` – Optional; serves images for HITL annotation or when
+   transferring the annotation dataset to another computer.
+2. `2-2_label-studio-interface` – Label Studio interface configuration. This is
+   imported into Label Studio and is not run as a Python script.
+3. `2-3_JSON-combiner.py` – Optional; combines annotations exported from
+   multiple Label Studio projects.
+4. `2-4_JSON-reclass.py` – Optional; renames classes or merges multiple
+   annotation classes.
+5. `2-5_JSON-to-PNG-mask.py` – Converts Label Studio JSON annotations to
+   segmentation masks.
+6. `2-6_dataset-partition.py` – Partitions the labelled dataset for model
+   development.
+7. `2-7_HITL-mask-to-JSON.py` – [explanation]
+   
 
 ## 3. Segmentation Model Training 
 3-1_PhenoTrap training - used to fine-tune model
