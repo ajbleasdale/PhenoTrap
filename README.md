@@ -22,9 +22,8 @@ Several of these scripts are optional depending on the labelling procedure
 
 ## 5. Model Applications 
 
-## 6. Model Applications Graphical Visualisations
+## 6. PhenoTrap Utlities
 
-## 7. Miscellaneous Helper Code
 
 
 ## Workflow
@@ -40,7 +39,7 @@ Run scripts in the following order
 
 ### 2_annotation
 ##### 2-1_serve-images.py (optional for HITL labelling)
-##### 2-2_label-studio-interface for implementation into Label Studio software - Not to run in Python 
+##### 2-2_label-studio-interface (for implementation into Label Studio software - Not to run in Python)
 ##### 2-3_JSON-combiner.py
 ##### 2-4_JSON-reclass.py
 ##### 2-5_JSON-to-PNG-mask.py
@@ -51,19 +50,28 @@ Run scripts in the following order
 
 
 ### 3_training
+##### 3-1_PhenoTrap-training.py
+##### 3-2_experiment-log-analysis.py
+##### experiment-log.xlsx (to download for saving experimental log data)
 
 
 ### 4_inference
-
+##### 4-1_PhenoTrap-inferance.py
+##### 4-2_class-ROI-isolation.py
+##### 4-3_organise-ROI-to-class-folder.py
+##### 4-4a_quanitfy-class-from-model.py
+##### 4-4b_quanitfy-class-from-mask.py
+##### 4-5_reverse-ROI-to-mask.py (emergency retrieval of single-channel masks)
 
 ### 5_application
 
 
 
-### 6_visualisation
+### 6_utilities
 
 
-### 7_miscellaneous
 
-## further information
-#### 1-A_naming-convention.md
+
+## Documentation
+#### 1_naming-convention.md
+#### 2_quality control.md
