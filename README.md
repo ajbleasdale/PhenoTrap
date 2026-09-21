@@ -22,8 +22,8 @@ Inference from PhenoTrap can be utilised for monitoring habitat scene compositio
 
 The expected input strucure is as follows
 input/
-├── site-1/ < br / > 
-│  ├── BE-LE_40_2023-04-12_160000.JPG < br / > 
+├── site-1/ <br/> 
+│  ├── BE-LE_40_2023-04-12_160000.JPG <br/> 
 │  └── BE-LE_532_2024-08-13_160000.JPG
 └── site-2/
    ├── SE-NM_111_2020_03_24_120000.JPG
