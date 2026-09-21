@@ -8,6 +8,7 @@ of ecological metrics from classified imagery.
 PhenoTrap fine-tunes a DeeplabV3/ResNet-101 CNN to isolate 13 unique environmental and vegetation classes. 
 Inference from PhenoTrap can be utilised for monitoring habitat scene composition, snow cover analysis and vegetation greenup <br/>
 
+## Workflow Overview
 PhenoTrap/ <br/>
 ├── 1_preprocessing/ <br/>
 ├── 2_annotation/ <br/>
@@ -29,7 +30,7 @@ PhenoTrap/ <br/>
 - pandas
 - NumPy
 
-
+## Repository Structure
 The expected input strucure is as follows: <br/>
 input/ <br/>
 ├── site-1/ <br/> 
@@ -83,7 +84,7 @@ experiment-log.xlsx IMPORTANT - download and save in experiment folder to ensure
 
 scripts to run inference, organise data and subsequent ROI isolation 
 
-4-1_PhenoTrap-inferance.py
+4-1_PhenoTrap-inference.py
 4-2_class-ROI-isolation.py
 4-3_organise-ROI-to-class-folder.py
 4-4a_quanitfy-class-from-model.py
@@ -107,7 +108,7 @@ scripts for for further ecological applications either direct from inference dat
 5-4a_GCC-breakpoints-threshold.py
 5-4b_GCC-breakpoints-slope.py
 
-## 6. PhenoTrap Utlities
+## 6. PhenoTrap Utilities
 Split into folders, code to help
 
 metadata to add and save update metadata
@@ -173,6 +174,7 @@ Run scripts in the following order
 ### 6_utilities
 
 
+## Model Availability
 
 
 ## Documentation
@@ -182,3 +184,5 @@ Additional documentation is available in the `documentation` directory:
 - [Naming convention](Documentation/1_naming-convention.md)
 - [Quality control](Documentation/2_quality-control.md)
 - [Label definitions](Documentation/3_label-definitions.md)
+
+## Acknowledgements
