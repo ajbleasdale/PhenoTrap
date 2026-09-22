@@ -191,7 +191,7 @@ metadata to add and save update metadata
 Additional documentation is available in the `documentation` directory:
 
 - [Naming Convention](Documentation/1_naming-convention.md)
-- [Quality Control](Documentation/2_quality-control.md)
+- [Quality Control](Documentation/2_quality-control-procedure.md)
 - [Label Definitions](Documentation/3_label-definitions.md)
 
 ## Acknowledgements
