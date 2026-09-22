@@ -13,7 +13,7 @@ Images are assessed for four types of quality issue:
 ### 1. Image blur
 
 Blur is assessed using the variance of the Laplacian, which provides a measure of image sharpness based on spatial intensity changes. Sharpness is evaluated for both the complete image and the upper 45% of the image.
-`hello´
+
 An image is classified as blurred when both:
 
 * full-image Laplacian variance < `180`
