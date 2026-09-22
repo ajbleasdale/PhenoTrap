@@ -109,3 +109,7 @@ After processing, the script reports:
 An image can fail more than one criterion; therefore, the sum of individual rejection categories may exceed the total number of failed images.
 
 Unreadable image files are reported separately and are not automatically moved by the current procedure.
+
+## Manual Review
+
+After running the quality control procedure, we recommend a manual sanity check through both the original and quality control folders to visually identify any imagery that has been missed, or incorrectly identified as poor quality.
