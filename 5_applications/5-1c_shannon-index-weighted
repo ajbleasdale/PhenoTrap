@@ -1,0 +1,528 @@
+# ============================================================
+# SHANNON DIVERSITY INDEX
+# Two locations + selectable vegetation classes
+# ============================================================
+
+from pathlib import Path
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+
+
+# ============================================================
+# USER SETTINGS
+# ============================================================
+
+DATASETS = [
+    {
+        "name": "SE-NM",
+        "csv": r""path-to-pixel-summary-1.csv",
+        "colour": "#0000a2",
+    },
+    {
+        "name": "BE-LE",
+        "csv": r"path-to-pixel-summary-2.csv",
+        "colour": "#bc272d",
+    },
+]
+
+
+OUTPUT_DIR = Path(
+    r"path-to-output-directory"
+)
+
+DATE_COL = "date"
+
+
+# ============================================================
+# VEGETATION CLASSES TO INCLUDE
+# ============================================================
+# Add/remove classes here as required.
+#
+# Only these classes contribute to the Shannon index.
+# Sky, snow/ice, bare ground and background are excluded.
+
+VEGETATION_COLS = [
+    "ericaceous_shrub_pixels",
+    "briar_seedling_pixels",
+    "graminoid_pixels",
+    "forb_pixels",
+    "fern_pixels",
+    "cryptogam_pixels",
+    "vine_pixels",
+    "broadleaf_evergreen_pixels",
+    "conifer_pixels",
+    "broadleaf_deciduous_pixels",
+]
+
+
+# ============================================================
+# PLOT SETTINGS
+# ============================================================
+
+FIG_WIDTH = 12
+FIG_HEIGHT = 7
+DPI = 300
+
+TITLE = "Vegetation Diversity"
+X_LABEL = "Date"
+Y_LABEL = "Shannon Diversity Index (H′)"
+
+FONT_SIZE = 18
+TITLE_SIZE = 20
+AXIS_LABEL_SIZE = 20
+TICK_SIZE = 16
+LEGEND_SIZE = 16
+
+LINE_WIDTH = 2.0
+
+SAVE_NAME = "daily_shannon_index.png"
+
+
+# ============================================================
+# OPTIONAL SMOOTHING
+# ============================================================
+# None = plot raw daily values
+#
+# For example:
+# ROLLING_WINDOW = 7
+#
+# would produce a 7-day centred rolling mean.
+
+ROLLING_WINDOW = None
+
+
+# ============================================================
+# ARIAL FONT
+# ============================================================
+
+plt.rcParams.update({
+    "font.family": "Arial",
+    "font.size": FONT_SIZE,
+    "axes.titlesize": TITLE_SIZE,
+    "axes.labelsize": AXIS_LABEL_SIZE,
+    "xtick.labelsize": TICK_SIZE,
+    "ytick.labelsize": TICK_SIZE,
+    "legend.fontsize": LEGEND_SIZE,
+})
+
+
+# ============================================================
+# SHANNON FUNCTION
+# ============================================================
+
+def calculate_shannon(row):
+
+    values = row[VEGETATION_COLS].to_numpy(dtype=float)
+
+    total = values.sum()
+
+    # No vegetation present
+    if total == 0:
+        return np.nan
+
+    # Relative abundance among vegetation classes
+    proportions = values / total
+
+    # Remove zero values because log(0) is undefined
+    proportions = proportions[proportions > 0]
+
+    # Shannon diversity index
+    return -np.sum(
+        proportions * np.log(proportions)
+    )
+
+
+# ============================================================
+# PROCESS EACH LOCATION
+# ============================================================
+
+all_results = {}
+
+for dataset in DATASETS:
+
+    name = dataset["name"]
+    csv_file = dataset["csv"]
+
+    print("\n" + "=" * 60)
+    print(f"Processing: {name}")
+    print("=" * 60)
+
+    # --------------------------------------------------------
+    # Load CSV
+    # --------------------------------------------------------
+
+    df = pd.read_csv(csv_file)
+
+    df[DATE_COL] = pd.to_datetime(
+        df[DATE_COL],
+        errors="coerce"
+    )
+
+    df = df.dropna(
+        subset=[DATE_COL]
+    )
+
+
+    # --------------------------------------------------------
+    # Check vegetation columns
+    # --------------------------------------------------------
+
+    missing_cols = [
+        col for col in VEGETATION_COLS
+        if col not in df.columns
+    ]
+
+    if missing_cols:
+        raise ValueError(
+            f"{name}: vegetation columns missing:\n"
+            + "\n".join(missing_cols)
+        )
+
+
+    # --------------------------------------------------------
+    # Convert dates to day
+    # --------------------------------------------------------
+
+    df["day"] = df[DATE_COL].dt.floor("D")
+
+
+    # --------------------------------------------------------
+    # Sum pixel counts for each day
+    # --------------------------------------------------------
+
+    daily = (
+        df.groupby("day")[VEGETATION_COLS]
+        .sum()
+        .sort_index()
+    )
+
+
+    # --------------------------------------------------------
+    # Total vegetation pixels
+    # --------------------------------------------------------
+
+    daily["vegetation_pixels"] = (
+        daily[VEGETATION_COLS]
+        .sum(axis=1)
+    )
+
+
+    # --------------------------------------------------------
+    # Vegetation class richness
+    # --------------------------------------------------------
+
+    daily["vegetation_class_richness"] = (
+        daily[VEGETATION_COLS] > 0
+    ).sum(axis=1)
+
+
+    # --------------------------------------------------------
+    # Shannon diversity
+    # --------------------------------------------------------
+
+    daily["shannon_index"] = daily.apply(
+        calculate_shannon,
+        axis=1
+    )
+
+
+    # --------------------------------------------------------
+    # Pielou's evenness
+    # --------------------------------------------------------
+
+    richness = daily["vegetation_class_richness"]
+
+    daily["shannon_evenness"] = np.where(
+        richness > 1,
+        daily["shannon_index"] / np.log(richness),
+        np.nan
+    )
+
+
+    # --------------------------------------------------------
+    # Optional rolling mean
+    # --------------------------------------------------------
+
+    if ROLLING_WINDOW is not None:
+
+        daily["shannon_plot"] = (
+            daily["shannon_index"]
+            .rolling(
+                window=ROLLING_WINDOW,
+                center=True,
+                min_periods=1
+            )
+            .mean()
+        )
+
+    else:
+
+        daily["shannon_plot"] = daily["shannon_index"]
+
+
+    # --------------------------------------------------------
+    # Store results
+    # --------------------------------------------------------
+
+    all_results[name] = daily
+
+
+    # --------------------------------------------------------
+    # Save individual CSV
+    # --------------------------------------------------------
+
+    OUTPUT_DIR.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    csv_output = (
+        OUTPUT_DIR /
+        f"{name}_daily_shannon_index.csv"
+    )
+
+    daily.to_csv(csv_output)
+
+    print(f"Saved: {csv_output}")
+
+
+    # --------------------------------------------------------
+    # Print summary
+    # --------------------------------------------------------
+
+    print("\nShannon summary:")
+
+    print(
+        daily["shannon_index"].describe()
+    )
+
+
+# ============================================================
+# THEORETICAL MAXIMUM
+# ============================================================
+
+MAX_SHANNON = np.log(
+    len(VEGETATION_COLS)
+)
+
+print("\n" + "=" * 60)
+
+print(
+    f"Number of vegetation classes: "
+    f"{len(VEGETATION_COLS)}"
+)
+
+print(
+    f"Maximum possible Shannon index: "
+    f"{MAX_SHANNON:.3f}"
+)
+
+
+# ============================================================
+# PLOT BOTH LOCATIONS
+# ============================================================
+
+fig, ax = plt.subplots(
+    figsize=(FIG_WIDTH, FIG_HEIGHT),
+    dpi=DPI
+)
+
+
+for dataset in DATASETS:
+
+    name = dataset["name"]
+    colour = dataset["colour"]
+
+    daily = all_results[name]
+
+    ax.plot(
+        daily.index,
+        daily["shannon_plot"],
+        color=colour,
+        linewidth=LINE_WIDTH,
+        label=name
+    )
+
+
+# ============================================================
+# AXIS LABELS
+# ============================================================
+
+ax.set_title(
+    TITLE,
+    fontsize=TITLE_SIZE,
+    fontname="Arial"
+)
+
+ax.set_xlabel(
+    X_LABEL,
+    fontsize=AXIS_LABEL_SIZE,
+    fontname="Arial"
+)
+
+ax.set_ylabel(
+    Y_LABEL,
+    fontsize=AXIS_LABEL_SIZE,
+    fontname="Arial"
+)
+
+ax.set_ylim(
+    bottom=0
+)
+
+
+# ============================================================
+# X-AXIS DATA RANGE
+# ============================================================
+
+start_date = min(
+    daily.index.min()
+    for daily in all_results.values()
+)
+
+end_date = max(
+    daily.index.max()
+    for daily in all_results.values()
+)
+
+ax.set_xlim(
+    start_date,
+    end_date
+)
+
+
+# ============================================================
+# YEAR TICKS
+# ============================================================
+
+year_ticks = [start_date]
+year_labels = [str(start_date.year)]
+
+for year in range(
+    start_date.year + 1,
+    end_date.year + 1
+):
+
+    year_date = pd.Timestamp(
+        f"{year}-01-01"
+    )
+
+    if year_date <= end_date:
+
+        year_ticks.append(year_date)
+        year_labels.append(str(year))
+
+
+ax.set_xticks(
+    year_ticks,
+    minor=False
+)
+
+ax.set_xticklabels(
+    year_labels,
+    minor=False,
+    fontname="Arial"
+)
+
+
+# ============================================================
+# MONTH TICKS
+# ============================================================
+
+ax.xaxis.set_minor_locator(
+    mdates.MonthLocator(
+        bymonth=[4, 7, 10]
+    )
+)
+
+ax.xaxis.set_minor_formatter(
+    mdates.DateFormatter("%b")
+)
+
+
+# ============================================================
+# TICK STYLE
+# ============================================================
+
+ax.tick_params(
+    axis="x",
+    which="major",
+    labelsize=16,
+    pad=14
+)
+
+ax.tick_params(
+    axis="x",
+    which="minor",
+    labelsize=11,
+    pad=4
+)
+
+ax.tick_params(
+    axis="y",
+    labelsize=TICK_SIZE
+)
+
+
+# Force tick labels to Arial
+for label in ax.get_xticklabels(
+    minor=False
+):
+    label.set_fontname("Arial")
+
+for label in ax.get_xticklabels(
+    minor=True
+):
+    label.set_fontname("Arial")
+
+for label in ax.get_yticklabels():
+    label.set_fontname("Arial")
+
+
+# ============================================================
+# LEGEND
+# ============================================================
+
+legend = ax.legend(
+    fontsize=LEGEND_SIZE,
+    frameon=False,
+    loc="upper left",
+    bbox_to_anchor=(1.01, 1)
+)
+
+for text in legend.get_texts():
+    text.set_fontname("Arial")
+
+
+# ============================================================
+# FINAL STYLE
+# ============================================================
+
+ax.grid(False)
+ax.margins(x=0)
+
+plt.tight_layout()
+
+
+# ============================================================
+# SAVE
+# ============================================================
+
+OUTPUT_DIR.mkdir(
+    parents=True,
+    exist_ok=True
+)
+
+out_path = OUTPUT_DIR / SAVE_NAME
+
+plt.savefig(
+    out_path,
+    dpi=DPI,
+    bbox_inches="tight"
+)
+
+plt.close()
+
+print(f"\nSaved combined Shannon figure to:\n{out_path}")
