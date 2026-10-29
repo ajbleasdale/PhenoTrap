@@ -4,6 +4,7 @@ This guide describes the labelling procedure used to create semantic segmentatio
 The aim is to produce consistent vegetation and environmental labels while recognising that camera-trap imagery can contain complex boundaries, distant vegetation and features that cannot always be identified with certainty.
 Annotation workflow
 •	Images are annotated individually using polygon annotations.
+
 •	The entire image should be considered for annotation.
 •	All target classes should be labelled where they can be reasonably identified.
 •	Areas that cannot be identified with sufficient confidence can be assigned to Ignore.
