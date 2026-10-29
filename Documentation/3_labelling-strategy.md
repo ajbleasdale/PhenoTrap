@@ -333,7 +333,7 @@ An improvement should not necessarily be expected after every HITL iteration.
 A small number of additional training images may not provide sufficient new information to produce a measurable improvement. Similarly, where the validation or test dataset is small, changes in model performance may be difficult to distinguish reliably.
 Evaluation should therefore consider both overall performance and class-specific performance, particularly for rare classes or conditions deliberately targeted during HITL.
 ________________________________________
-Practical Principles
+## Practical Principles
 When annotating manually or correcting HITL predictions:
 1.	Aim for consistency rather than pixel-perfect boundaries.
 2.	Do not spend disproportionate amounts of time tracing highly complex polygons.
