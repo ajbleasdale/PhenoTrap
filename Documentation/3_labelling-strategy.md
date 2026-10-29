@@ -1,4 +1,5 @@
-Image Labelling
+# Image Labelling
+
 This guide describes the labelling procedure used to create semantic segmentation datasets. Annotation is performed in Label Studio using polygon annotations.
 The aim is to produce consistent vegetation and environmental labels while recognising that camera-trap imagery can contain complex boundaries, distant vegetation and features that cannot always be identified with certainty.
 Annotation workflow
@@ -8,8 +9,9 @@ Annotation workflow
 •	Areas that cannot be identified with sufficient confidence can be assigned to Ignore.
 •	Annotation boundaries should be moderately precise. Follow the major visible boundaries of an object or vegetation class, but do not spend excessive time tracing highly complex boundaries.
 •	Small gaps or individual pixels do not need to be exhaustively annotated where doing so would require disproportionately complex polygons.
-General labelling rules
-Uncertainty
+
+## General labelling rules
+### Uncertainty
 Labels should primarily be assigned according to the visible features in the image. Contextual information can also be used where the class is difficult to determine.
 Useful contextual information includes:
 •	surrounding vegetation and objects;
@@ -19,19 +21,24 @@ Useful contextual information includes:
 •	images from earlier or later in the same camera-trap time series; and
 •	the original image where the displayed or processed image makes features difficult to distinguish.
 Small uncertain regions can generally be assigned to the most likely class where any error would affect only a small number of pixels.
+
 Where a large region cannot be confidently identified, it should be assigned to Ignore rather than forcing an uncertain class assignment.
 For distant or low-resolution vegetation, use visible features and contextual information where possible. The briar_seedling class accounts for some low-growing broadleaf vegetation that cannot reliably be classified more finely. Where there is insufficient evidence to assign a class, use Ignore.
+
 The same labelling criteria should be applied to training, validation and testing imagery.
-Visible surfaces and overlapping classes
+
+### Visible surfaces and overlapping classes
 As a general rule, label the visible surface rather than the object underneath it.
 This rule is relaxed where a covering does not substantially obscure the structure and identity of the underlying vegetation. For example, light or powdery snow through which the vegetation remains clearly identifiable can retain the vegetation class.
+
 Examples include:
 •	large accumulations of snow obscuring vegetation → snow_ice;
 •	light/powdery snow with the underlying vegetation clearly visible → underlying vegetation class;
 •	moss growing over rock → visible moss as cryptogam, exposed rock as bare;
 •	vines covering tree foliage → visible vine-covered area as vine;
 •	vegetation in shadow → underlying vegetation class where its features remain identifiable.
-Seasonal and dead vegetation
+
+### Seasonal and dead vegetation
 Where vegetation remains identifiable, seasonal changes should not normally result in a change of class.
 For example:
 •	brown or dead grass remains graminoid;
@@ -40,7 +47,8 @@ For example:
 •	thin stems that remain identifiable as living vegetation can remain within the appropriate vegetation class;
 •	dead woody branches are background.
 Special consideration is required for deciduous trees during winter; see Broadleaf deciduous.
-Scale and distance
+
+### Scale and distance
 The appropriate level of annotation detail depends on how clearly vegetation structures can be resolved.
 For nearby vegetation, individual leaves or groups of leaves can be delineated where practical. Visible branches and sufficiently large gaps between foliage should not be included within the vegetation polygon.
 For distant vegetation, crowns can be annotated as more continuous regions where individual leaves, shoots and small gaps cannot reasonably be resolved.
@@ -52,7 +60,7 @@ Within sparse conifer and deciduous crowns, aim to capture visible sky gaps wher
 For nearby crowns, clearly visible gaps and spaces between individual leaves should be labelled as sky where sufficiently large to annotate.
 For distant crowns, very small internal gaps can be incorporated into the tree polygon where individual crown components cannot reasonably be resolved.
 ________________________________________
-Class Guide
+## Class Guide
 Class	Includes	Key identification and notes
 background	Tree trunks, branches, stumps, exposed roots and non-target objects	Used for areas that do not belong to one of the target environmental classes
 sky	Visible sky	Label clear canopy gaps but do not exhaustively trace very small fragmented gaps
