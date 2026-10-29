@@ -2,9 +2,9 @@
 
 This guide describes the labelling procedure used to create semantic segmentation datasets. Annotation is performed in Label Studio using polygon annotations.
 The aim is to produce consistent vegetation and environmental labels while recognising that camera-trap imagery can contain complex boundaries, distant vegetation and features that cannot always be identified with certainty.
-Annotation workflow
-•	Images are annotated individually using polygon annotations.
+## Annotation workflow
 
+•	Images are annotated individually using polygon annotations.
 •	The entire image should be considered for annotation.
 •	All target classes should be labelled where they can be reasonably identified.
 •	Areas that cannot be identified with sufficient confidence can be assigned to Ignore.
@@ -13,8 +13,10 @@ Annotation workflow
 
 ## General labelling rules
 ### Uncertainty
+
 Labels should primarily be assigned according to the visible features in the image. Contextual information can also be used where the class is difficult to determine.
 Useful contextual information includes:
+
 •	surrounding vegetation and objects;
 •	position within the image and vegetation structure;
 •	season;
@@ -33,6 +35,7 @@ As a general rule, label the visible surface rather than the object underneath i
 This rule is relaxed where a covering does not substantially obscure the structure and identity of the underlying vegetation. For example, light or powdery snow through which the vegetation remains clearly identifiable can retain the vegetation class.
 
 Examples include:
+
 •	large accumulations of snow obscuring vegetation → snow_ice;
 •	light/powdery snow with the underlying vegetation clearly visible → underlying vegetation class;
 •	moss growing over rock → visible moss as cryptogam, exposed rock as bare;
@@ -41,7 +44,9 @@ Examples include:
 
 ### Seasonal and dead vegetation
 Where vegetation remains identifiable, seasonal changes should not normally result in a change of class.
+
 For example:
+
 •	brown or dead grass remains graminoid;
 •	senescent or dead ferns remain fern;
 •	senescent forbs remain forb;
@@ -54,8 +59,11 @@ The appropriate level of annotation detail depends on how clearly vegetation str
 For nearby vegetation, individual leaves or groups of leaves can be delineated where practical. Visible branches and sufficiently large gaps between foliage should not be included within the vegetation polygon.
 For distant vegetation, crowns can be annotated as more continuous regions where individual leaves, shoots and small gaps cannot reasonably be resolved.
 Dense groups of trees can therefore be annotated collectively where separating individual crowns is impractical.
+
 If a distant tree cannot be confidently classified, for example as conifer or broadleaf deciduous, use ignore.
-Sky and canopy gaps
+
+### Sky and canopy gaps
+
 Clearly identifiable sky should be labelled sky.
 Within sparse conifer and deciduous crowns, aim to capture visible sky gaps where practical. However, very small or highly fragmented gaps do not need to be exhaustively delineated.
 For nearby crowns, clearly visible gaps and spaces between individual leaves should be labelled as sky where sufficiently large to annotate.
