@@ -24,7 +24,7 @@ Useful contextual information includes:
 -	site characteristics;
 -	images from earlier or later in the same camera-trap time series; and
 -	the original image where the displayed or processed image makes features difficult to distinguish.
--	
+
 Small uncertain regions can generally be assigned to the most likely class where any error would affect only a small number of pixels.
 
 Where a large region cannot be confidently identified, it should be assigned to Ignore rather than forcing an uncertain class assignment.
