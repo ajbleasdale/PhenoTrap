@@ -6,23 +6,25 @@ The aim is to produce consistent vegetation and environmental labels while recog
 
 -	Images are annotated individually using polygon annotations.
 -	The entire image should be considered for annotation.
-•	All target classes should be labelled where they can be reasonably identified.
-•	Areas that cannot be identified with sufficient confidence can be assigned to Ignore.
-•	Annotation boundaries should be moderately precise. Follow the major visible boundaries of an object or vegetation class, but do not spend excessive time tracing highly complex boundaries.
-•	Small gaps or individual pixels do not need to be exhaustively annotated where doing so would require disproportionately complex polygons.
+-	All target classes should be labelled where they can be reasonably identified.
+-	Areas that cannot be identified with sufficient confidence can be assigned to Ignore.
+-	Annotation boundaries should be moderately precise. Follow the major visible boundaries of an object or vegetation class, but do not spend excessive time tracing highly complex boundaries.
+-	Small gaps or individual pixels do not need to be exhaustively annotated where doing so would require disproportionately complex polygons.
 
 ## General labelling rules
 ### Uncertainty
 
 Labels should primarily be assigned according to the visible features in the image. Contextual information can also be used where the class is difficult to determine.
+
 Useful contextual information includes:
 
-•	surrounding vegetation and objects;
-•	position within the image and vegetation structure;
-•	season;
-•	site characteristics;
-•	images from earlier or later in the same camera-trap time series; and
-•	the original image where the displayed or processed image makes features difficult to distinguish.
+-	surrounding vegetation and objects;
+-	position within the image and vegetation structure;
+-	season;
+-	site characteristics;
+-	images from earlier or later in the same camera-trap time series; and
+-	the original image where the displayed or processed image makes features difficult to distinguish.
+-	
 Small uncertain regions can generally be assigned to the most likely class where any error would affect only a small number of pixels.
 
 Where a large region cannot be confidently identified, it should be assigned to Ignore rather than forcing an uncertain class assignment.
