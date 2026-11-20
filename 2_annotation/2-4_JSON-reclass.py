@@ -88,8 +88,8 @@ LABEL_KEYS: Set[str] = {
     "choice",
 }
 
-IN_JSON = Path(r"\\storage-ume.slu.se\home$\arbl0002\My Documents\1-Active\Paper-1\Segmentation\JSON\FINAL-BASELINE.json")
-OUT_JSON = Path(r"\\storage-ume.slu.se\home$\arbl0002\My Documents\1-Active\Paper-1\Segmentation\JSON\FINAL-BASELINE-COMPLEX.json")
+IN_JSON = Path(r"path-to-JSON-input.json")
+OUT_JSON = Path(r"path-to-JSON-output.json")
 
 
 def rename_label(label: str) -> str:
