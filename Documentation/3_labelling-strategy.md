@@ -211,27 +211,45 @@ For nearby trees where individual bare branches are clearly resolved, the branch
 This means annotation is intentionally scale dependent: a distant leafless crown may form a broadleaf_deciduous polygon even though individual bare branches would be background when viewed at higher resolution.
 ________________________________________
 ## Common Ambiguous Cases
-- Situation	Recommended annotation
+#### Situation	Recommended annotation
 - Heavy snow obscuring vegetation
   - snow_ice
-- Light/powdery snow with vegetation clearly identifiable	Underlying vegetation class
-- Moss covering rock	Moss = cryptogam; exposed rock = bare
-- Vine covering tree foliage	Visible vine = vine
-- Vegetation in shadow but still identifiable	Underlying vegetation class
-- Completely obscured/unidentifiable vegetation	ignore
-- Dead/brown grass	graminoid
-- Senescent/dead fern	fern
-- Senescent forb	forb
-- Leaf or needle litter	bare
-- Fallen large branch	background
-- Small woody debris incorporated into ground surface	bare
-- Tree trunk/stump/exposed root	background
-- Distant identifiable leafless deciduous crown	broadleaf_deciduous
-- Distant tree with uncertain type	ignore
-- Tiny fragmented sky gaps	Do not need exhaustive annotation
-- Animal or person	ignore
-- Severe blur/darkness/overexposure preventing identification	ignore
-- Image-edge vegetation	Annotate normally where identifiable
+- Light/powdery snow with vegetation clearly identifiable
+  - Underlying vegetation class
+- Moss covering rock
+  - Moss = cryptogam; exposed rock = bare
+- Vine covering tree foliage
+  - Visible vine = vine
+- Vegetation in shadow but still identifiable
+  - Underlying vegetation class
+- Completely obscured/unidentifiable vegetation
+  - ignore
+- Dead/brown grass
+  - graminoid
+- Senescent/dead fern
+  - fern
+- Senescent forb
+  - forb
+- Leaf or needle litter
+  - bare
+- Fallen large branch
+  - background
+- Small woody debris incorporated into ground surface
+  - bare
+- Tree trunk/stump/exposed root
+  - background
+- Distant identifiable leafless deciduous crown
+  - broadleaf_deciduous
+- Distant tree with uncertain type
+  - ignore
+- Tiny fragmented sky gaps
+  - Do not need exhaustive annotation
+- Animal or person
+  - ignore
+- Severe blur/darkness/overexposure preventing identification
+  - ignore
+- Image-edge vegetation
+  - Annotate normally where identifiable
 ________________________________________
 ## Human-in-the-Loop Annotation
 ### Overview
