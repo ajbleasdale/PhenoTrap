@@ -88,7 +88,8 @@ broadleaf_evergreen	Evergreen broadleaf vegetation such as holly	Often darker, t
 conifer	Coniferous trees	Includes all conifers
 broadleaf_deciduous	Deciduous broadleaf trees	Includes distant leafless crowns where tree identity remains clear
 ignore	Regions that should not contribute to training/evaluation	Used for substantial uncertain regions and specified excluded objects
-Background
+
+### Background
 Background includes non-target features such as:
 •	tree trunks;
 •	large branches;
@@ -98,7 +99,7 @@ Background includes non-target features such as:
 •	artificial objects and structures such as fences and buildings.
 Small or thin dead woody debris can be incorporated into bare where it forms part of the ground surface. Larger identifiable branches remain background.
 Pixels that are not covered by an annotation are also treated as background. The aim is therefore to minimise unintended gaps between annotations, although small gaps may remain where boundaries are particularly complex.
-Ignore
+### Ignore
 ignore is used for regions that cannot be labelled reliably or that should deliberately be excluded from model training and evaluation.
 This includes:
 •	large regions where the vegetation or surface class cannot be confidently identified;
@@ -107,7 +108,7 @@ This includes:
 •	regions where image quality, such as severe blur, darkness or overexposure, prevents reliable identification.
 In the exported masks, Ignore pixels are assigned a value of 255. This value is excluded within both the training and testing scripts, meaning that Ignore pixels do not contribute to the training loss or model evaluation.
 Uncertain regions that should be excluded should therefore be explicitly labelled as ignore rather than simply left unannotated, as unannotated pixels are treated as background.
-Sky
+### Sky
 Label as much clearly identifiable sky as practical.
 This is particularly challenging within sparse conifer crowns and leafless deciduous vegetation. Clearly visible gaps should be annotated, but very small gaps do not need to be exhaustively traced.
 For distant crowns, small gaps can be incorporatedated into the tree class where individual branches and gaps cannot reasonably be resolved.
@@ -117,7 +118,7 @@ Where snow occurs on vegetation:
 •	heavy snow / large accumulations: label the visible snow as snow_ice;
 •	light or powdery snow: retain the vegetation class where the underlying structure remains clearly visible.
 The aim is to distinguish snow that visually replaces the vegetation surface from snow that only partially covers an otherwise identifiable plant.
-Bare
+### Bare
 bare includes:
 •	bare soil;
 •	exposed rock;
@@ -146,7 +147,7 @@ The class can be distinguished from:
 •	ericaceous_shrub where characteristic ericaceous growth forms can be identified.
 Where low-resolution foreground broadleaf vegetation cannot be separated more finely but appears consistent with this functional group, briar_seedling can be used.
 Where there is insufficient evidence even for this distinction, use ignore.
-Graminoid
+### Graminoid
 Includes:
 •	grasses;
 •	sedges; and
@@ -154,7 +155,7 @@ Includes:
 Graminoids are generally characterised by long, relatively narrow leaves or blades.
 Brown, senescent or dead graminoid vegetation remains graminoid where its structure can still be identified.
 When distinguishing graminoids from forbs, look for narrower leaves and grass-like structure. Broad leaves and identifiable flowers may provide evidence for forb.
-Forbs
+### Forbs
 Forbs include broadleaf herbaceous vegetation.
 Useful characteristics include:
 •	broad leaves;
@@ -162,32 +163,32 @@ Useful characteristics include:
 •	identifiable flowers where present.
 Forbs should be distinguished from briar_seedling, which generally has woody stems and tougher foliage.
 Senescent or dead forb vegetation remains forb where it can still be identified.
-Ferns
+### Ferns
 All identifiable ferns should be labelled fern.
 Senescent and dead ferns remain within this class where their characteristic structure remains recognisable.
-Cryptogams
+### Cryptogams
 The cryptogam class primarily includes:
 •	bryophytes, including mosses, occurring both terrestrially and epiphytically; and
 •	terrestrial lichens, including substantial ground-covering lichens such as reindeer lichens.
 Where moss grows over rock or another substrate, label the visible moss as cryptogam and the surrounding exposed substrate according to its visible class, typically bare.
 Epiphytic bryophytes, such as moss growing on tree trunks or branches, should also be labelled as cryptogam where they can be reasonably identified.
 Lichens should only be labelled where they occur terrestrially. Epiphytic lichens growing on trunks or branches are not annotated. These can be numerous, small and difficult to delineate consistently, making exhaustive annotation disproportionately time-consuming for their relevance to vegetation green-up.
-Vine
+### Vine
 Label visible woody vine vegetation as vine.
 Where a vine covers a tree, label the visible vine-covered area as vine. Areas of the underlying tree should only receive the tree class where its own foliage is visibly distinguishable.
 Dark green leaf tissue and the position of foliage along climbing woody stems can help distinguish vines from bare branches.
-Broadleaf Evergreen
+### Broadleaf Evergreen
 Includes broadleaf evergreen vegetation such as holly.
 Useful characteristics include:
 •	persistent foliage during winter;
 •	relatively dark green leaves; and
 •	tougher and often shinier leaves than many deciduous species.
 Winter imagery can be particularly useful for distinguishing broadleaf evergreen from broadleaf deciduous vegetation.
-Conifer
+### Conifer
 All identifiable coniferous trees should be labelled conifer.
 Visible trunks and sufficiently large exposed branches remain background.
 For distant crowns, small internal gaps and fine branches can be incorporatedated into the crown where they cannot reasonably be separated.
-Broadleaf Deciduous
+### Broadleaf Deciduous
 Includes deciduous broadleaf trees.
 During the growing season, annotate visible foliage while excluding clearly resolvable branches and sufficiently large gaps.
 During winter, leafless deciduous crowns can still be labelled broadleaf_deciduous where:
@@ -197,7 +198,7 @@ During winter, leafless deciduous crowns can still be labelled broadleaf_deciduo
 For nearby trees where individual bare branches are clearly resolved, the branches themselves should remain background.
 This means annotation is intentionally scale dependent: a distant leafless crown may form a broadleaf_deciduous polygon even though individual bare branches would be background when viewed at higher resolution.
 ________________________________________
-Common Ambiguous Cases
+## Common Ambiguous Cases
 Situation	Recommended annotation
 Heavy snow obscuring vegetation	snow_ice
 Light/powdery snow with vegetation clearly identifiable	Underlying vegetation class
@@ -219,12 +220,13 @@ Animal or person	ignore
 Severe blur/darkness/overexposure preventing identification	ignore
 Image-edge vegetation	Annotate normally where identifiable
 ________________________________________
-Human-in-the-Loop Annotation
-Overview
+## Human-in-the-Loop Annotation
+### Overview
 Human-in-the-loop (HITL) annotation can reduce the time required to expand an annotated dataset by using predictions from an existing trained model as initial annotations.
 The general workflow is:
 Select candidate imagery → run model inference → review prediction overlays → select images for annotation → convert predictions to Label Studio polygons → manually review and correct predictions → export corrected annotations → retrain and evaluate
 Model predictions should always be treated as initial annotations rather than ground truth. The same labelling rules described above should be applied when reviewing HITL annotations.
+
 1. Select candidate images
 Begin by selecting a larger pool of images from the new dataset/deployments.
 For example, when aiming to add approximately 250 annotated images, we have used a random sample of approximately 2,500 candidate images for initial model inference.
@@ -277,11 +279,11 @@ This serves the image directory with the required CORS configuration for Label S
 7. Polygon extraction settings
 Converting segmentation masks to editable polygons requires a balance between retaining boundary detail and producing polygons that can be efficiently corrected manually.
 The following settings were used in our workflow:
-# Polygon extraction tuning
+######## Polygon extraction tuning
 MIN_AREA_PX     = 50
 APPROX_EPS_FRAC = 0.0005
 
-# Overlap, boundary and splitting controls
+####### Overlap, boundary and splitting controls
 NO_OVERLAP      = True
 ERODE_PX        = 1
 SPLIT_OPEN_PX   = 2
