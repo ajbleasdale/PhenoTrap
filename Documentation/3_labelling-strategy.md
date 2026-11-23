@@ -53,7 +53,8 @@ For example:
 -	senescent or dead ferns remain fern;
 -	senescent forbs remain forb;
 -	thin stems that remain identifiable as living vegetation can remain within the appropriate vegetation class;
--	dead woody branches are background;
+-	dead woody branches are background.
+  
 Special consideration is required for deciduous trees during winter; see Broadleaf deciduous.
 
 ### Scale and distance
@@ -72,24 +73,38 @@ For nearby crowns, clearly visible gaps and spaces between individual leaves sho
 For distant crowns, very small internal gaps can be incorporated into the tree polygon where individual crown components cannot reasonably be resolved.
 ________________________________________
 ## Class Guide
-Class	Includes	Key identification and notes
-background	Tree trunks, branches, stumps, exposed roots and non-target objects	Used for areas that do not belong to one of the target environmental classes
-sky	Visible sky	Label clear canopy gaps but do not exhaustively trace very small fragmented gaps
-snow_ice	Snow and ice	Includes heavy snow obscuring vegetation; light snow can retain the underlying vegetation class
-bare	Bare soil, exposed rock, gravel, mud and leaf/needle litter	Includes surfaces without sufficient living vegetation cover
-ericaceous_shrub	Heather, bilberry and similar low-growing shrubs	Important low-growing woody vegetation, particularly in boreal environments
-briar_seedling	Briars and broadleaf woody seedlings	Functional class for low-growing woody broadleaf vegetation that cannot reliably be separated more finely
-graminoid	Grasses, sedges and rushes	Includes green, senescent and dead graminoid vegetation
-forb	Broadleaf herbaceous plants	Generally distinguished from briars/seedlings by herbaceous rather than woody stems
-fern	Ferns	Includes green and senescent/dead ferns where identifiable
-cryptogam	Bryophytes and terrestrial lichens	Includes mosses and substantial terrestrial lichen cover
-vine	Woody vines	Label visible vine-covered vegetation as vine
-broadleaf_evergreen	Evergreen broadleaf vegetation such as holly	Often darker, tougher and/or shinier foliage; particularly identifiable during winter
-conifer	Coniferous trees	Includes all conifers
-broadleaf_deciduous	Deciduous broadleaf trees	Includes distant leafless crowns where tree identity remains clear
+
+### Key identification and notes
+#### background	
+Tree trunks, branches, stumps, exposed roots and non-target objects	Used for areas that do not belong to one of the target environmental classes
+#### sky	
+Visible sky	Label clear canopy gaps but do not exhaustively trace very small fragmented gaps
+#### snow_ice	
+Snow and ice	Includes heavy snow obscuring vegetation; light snow can retain the underlying vegetation class
+#### bare	
+Bare soil, exposed rock, gravel, mud and leaf/needle litter	Includes surfaces without sufficient living vegetation cover
+#### ericaceous_shrub	
+Heather, bilberry and similar low-growing shrubs	Important low-growing woody vegetation, particularly in boreal environments
+#### briar_seedling	
+Briars and broadleaf woody seedlings	Functional class for low-growing woody broadleaf vegetation that cannot reliably be separated more finely
+#### graminoid	
+Grasses, sedges and rushes	Includes green, senescent and dead graminoid vegetation
+#### forb	
+Broadleaf herbaceous plants	Generally distinguished from briars/seedlings by herbaceous rather than woody stems
+### fern	
+Ferns	Includes green and senescent/dead ferns where identifiable
+#### cryptogam	
+Bryophytes and terrestrial lichens	Includes mosses and substantial terrestrial lichen cover
+#### vine	
+Woody vines	Label visible vine-covered vegetation as vine
+#### broadleaf_evergreen	
+Evergreen broadleaf vegetation such as holly	Often darker, tougher and/or shinier foliage; particularly identifiable during winter
+#### conifer	
+Coniferous trees	Includes all conifers both deciduous and evergreen
+#### broadleaf_deciduous	Deciduous broadleaf trees	Includes distant leafless crowns where tree identity remains clear
 ignore	Regions that should not contribute to training/evaluation	Used for substantial uncertain regions and specified excluded objects
 
-### Background
+### Background - 0
 Background includes non-target features such as:
 •	tree trunks;
 •	large branches;
@@ -99,7 +114,7 @@ Background includes non-target features such as:
 •	artificial objects and structures such as fences and buildings.
 Small or thin dead woody debris can be incorporated into bare where it forms part of the ground surface. Larger identifiable branches remain background.
 Pixels that are not covered by an annotation are also treated as background. The aim is therefore to minimise unintended gaps between annotations, although small gaps may remain where boundaries are particularly complex.
-### Ignore
+### Ignore - 255
 ignore is used for regions that cannot be labelled reliably or that should deliberately be excluded from model training and evaluation.
 This includes:
 •	large regions where the vegetation or surface class cannot be confidently identified;
@@ -108,17 +123,17 @@ This includes:
 •	regions where image quality, such as severe blur, darkness or overexposure, prevents reliable identification.
 In the exported masks, Ignore pixels are assigned a value of 255. This value is excluded within both the training and testing scripts, meaning that Ignore pixels do not contribute to the training loss or model evaluation.
 Uncertain regions that should be excluded should therefore be explicitly labelled as ignore rather than simply left unannotated, as unannotated pixels are treated as background.
-### Sky
+### Sky - 1
 Label as much clearly identifiable sky as practical.
 This is particularly challenging within sparse conifer crowns and leafless deciduous vegetation. Clearly visible gaps should be annotated, but very small gaps do not need to be exhaustively traced.
 For distant crowns, small gaps can be incorporatedated into the tree class where individual branches and gaps cannot reasonably be resolved.
-Snow/Ice
+### Snow/Ice - 2
 Label visible snow and ice as snow_ice.
 Where snow occurs on vegetation:
 •	heavy snow / large accumulations: label the visible snow as snow_ice;
 •	light or powdery snow: retain the vegetation class where the underlying structure remains clearly visible.
 The aim is to distinguish snow that visually replaces the vegetation surface from snow that only partially covers an otherwise identifiable plant.
-### Bare
+### Bare - 3
 bare includes:
 •	bare soil;
 •	exposed rock;
@@ -128,13 +143,13 @@ bare includes:
 •	needle litter.
 Dead herbaceous vegetation should not automatically become Bare. Where its vegetation type remains identifiable, retain the corresponding vegetation class.
 Very sparse vegetation can be treated as Bare where only a small number of isolated blades or shoots occur over an otherwise bare surface.
-Ericaceous shrubs
+### Ericaceous shrubs - 4
 This class includes low-growing ericaceous shrubs such as:
 •	heather; and
 •	bilberry.
 The class is intended to capture low-growing shrubs that can form substantial ground cover, particularly in boreal environments.
 It should be distinguished from briar_seedling, which represents other low-growing woody broadleaf vegetation that cannot reliably be separated more finely.
-Briar/Seedling
+### Briar/Seedling - 5
 briar_seedling is a functional annotation class rather than a conventional taxonomic group.
 It includes low-growing woody broadleaf vegetation such as:
 •	broadleaf tree seedlings; and
@@ -147,7 +162,7 @@ The class can be distinguished from:
 •	ericaceous_shrub where characteristic ericaceous growth forms can be identified.
 Where low-resolution foreground broadleaf vegetation cannot be separated more finely but appears consistent with this functional group, briar_seedling can be used.
 Where there is insufficient evidence even for this distinction, use ignore.
-### Graminoid
+#### Graminoid - 6
 Includes:
 •	grasses;
 •	sedges; and
@@ -155,7 +170,7 @@ Includes:
 Graminoids are generally characterised by long, relatively narrow leaves or blades.
 Brown, senescent or dead graminoid vegetation remains graminoid where its structure can still be identified.
 When distinguishing graminoids from forbs, look for narrower leaves and grass-like structure. Broad leaves and identifiable flowers may provide evidence for forb.
-### Forbs
+#### Forbs - 7
 Forbs include broadleaf herbaceous vegetation.
 Useful characteristics include:
 •	broad leaves;
@@ -163,32 +178,32 @@ Useful characteristics include:
 •	identifiable flowers where present.
 Forbs should be distinguished from briar_seedling, which generally has woody stems and tougher foliage.
 Senescent or dead forb vegetation remains forb where it can still be identified.
-### Ferns
+#### Ferns - 8
 All identifiable ferns should be labelled fern.
 Senescent and dead ferns remain within this class where their characteristic structure remains recognisable.
-### Cryptogams
+#### Cryptogams - 9
 The cryptogam class primarily includes:
 •	bryophytes, including mosses, occurring both terrestrially and epiphytically; and
 •	terrestrial lichens, including substantial ground-covering lichens such as reindeer lichens.
 Where moss grows over rock or another substrate, label the visible moss as cryptogam and the surrounding exposed substrate according to its visible class, typically bare.
 Epiphytic bryophytes, such as moss growing on tree trunks or branches, should also be labelled as cryptogam where they can be reasonably identified.
 Lichens should only be labelled where they occur terrestrially. Epiphytic lichens growing on trunks or branches are not annotated. These can be numerous, small and difficult to delineate consistently, making exhaustive annotation disproportionately time-consuming for their relevance to vegetation green-up.
-### Vine
+#### Vine - 10
 Label visible woody vine vegetation as vine.
 Where a vine covers a tree, label the visible vine-covered area as vine. Areas of the underlying tree should only receive the tree class where its own foliage is visibly distinguishable.
 Dark green leaf tissue and the position of foliage along climbing woody stems can help distinguish vines from bare branches.
-### Broadleaf Evergreen
+#### Broadleaf Evergreen - 11
 Includes broadleaf evergreen vegetation such as holly.
 Useful characteristics include:
 •	persistent foliage during winter;
 •	relatively dark green leaves; and
 •	tougher and often shinier leaves than many deciduous species.
 Winter imagery can be particularly useful for distinguishing broadleaf evergreen from broadleaf deciduous vegetation.
-### Conifer
+#### Conifer - 12
 All identifiable coniferous trees should be labelled conifer.
 Visible trunks and sufficiently large exposed branches remain background.
 For distant crowns, small internal gaps and fine branches can be incorporatedated into the crown where they cannot reasonably be separated.
-### Broadleaf Deciduous
+#### Broadleaf Deciduous -13
 Includes deciduous broadleaf trees.
 During the growing season, annotate visible foliage while excluding clearly resolvable branches and sufficiently large gaps.
 During winter, leafless deciduous crowns can still be labelled broadleaf_deciduous where:
