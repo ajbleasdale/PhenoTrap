@@ -49,11 +49,11 @@ Where vegetation remains identifiable, seasonal changes should not normally resu
 
 For example:
 
-•	brown or dead grass remains graminoid;
-•	senescent or dead ferns remain fern;
-•	senescent forbs remain forb;
-•	thin stems that remain identifiable as living vegetation can remain within the appropriate vegetation class;
-•	dead woody branches are background.
+-	brown or dead grass remains graminoid;
+-	senescent or dead ferns remain fern;
+-	senescent forbs remain forb;
+-	thin stems that remain identifiable as living vegetation can remain within the appropriate vegetation class;
+-	dead woody branches are background;
 Special consideration is required for deciduous trees during winter; see Broadleaf deciduous.
 
 ### Scale and distance
