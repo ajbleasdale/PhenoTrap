@@ -75,35 +75,6 @@ ________________________________________
 ## Class Guide
 
 ### Key identification and notes
-#### 0 - background	
-Tree trunks, branches, stumps, exposed roots and non-target objects	Used for areas that do not belong to one of the target environmental classes
-#### 1 - sky	
-Visible sky	Label clear canopy gaps but do not exhaustively trace very small fragmented gaps
-#### 2 - snow_ice	
-Snow and ice	Includes heavy snow obscuring vegetation; light snow can retain the underlying vegetation class
-#### 3 - bare	
-Bare soil, exposed rock, gravel, mud and leaf/needle litter	Includes surfaces without sufficient living vegetation cover
-#### 4 - ericaceous_shrub	
-Heather, bilberry and similar low-growing shrubs	Important low-growing woody vegetation, particularly in boreal environments
-#### 5 - briar_seedling	
-Briars and broadleaf woody seedlings	Functional class for low-growing woody broadleaf vegetation that cannot reliably be separated more finely
-#### 6 - graminoid	
-Grasses, sedges and rushes	Includes green, senescent and dead graminoid vegetation
-#### 7 - forb	
-Broadleaf herbaceous plants	Generally distinguished from briars/seedlings by herbaceous rather than woody stems
-#### 8 - fern	
-Ferns	Includes green and senescent/dead ferns where identifiable
-#### 9 - cryptogam	
-Bryophytes and terrestrial lichens	Includes mosses and substantial terrestrial lichen cover
-#### 10 - vine	
-Woody vines	Label visible vine-covered vegetation as vine
-#### 11 - broadleaf_evergreen	
-Evergreen broadleaf vegetation such as holly	Often darker, tougher and/or shinier foliage; particularly identifiable during winter
-#### 12 - conifer	
-Coniferous trees	Includes all conifers both deciduous and evergreen
-#### 13 - broadleaf_deciduous	Deciduous broadleaf trees	Includes distant leafless crowns where tree identity remains clear
-ignore	Regions that should not contribute to training/evaluation	Used for substantial uncertain regions and specified excluded objects
-
 
 ### Background - 0
 Background includes non-target features such as:
