@@ -2,6 +2,7 @@
 
 This guide describes the labelling procedure used to create semantic segmentation datasets. Annotation is performed in Label Studio using polygon annotations.
 The aim is to produce consistent vegetation and environmental labels while recognising that camera-trap imagery can contain complex boundaries, distant vegetation and features that cannot always be identified with certainty.
+
 ## Annotation workflow
 
 -	Images are annotated individually using polygon annotations.
@@ -17,7 +18,6 @@ The aim is to produce consistent vegetation and environmental labels while recog
 Labels should primarily be assigned according to the visible features in the image. Contextual information can also be used where the class is difficult to determine.
 
 Useful contextual information includes:
-
 -	surrounding vegetation and objects;
 -	position within the image and vegetation structure;
 -	season;
@@ -37,12 +37,11 @@ As a general rule, label the visible surface rather than the object underneath i
 This rule is relaxed where a covering does not substantially obscure the structure and identity of the underlying vegetation. For example, light or powdery snow through which the vegetation remains clearly identifiable can retain the vegetation class.
 
 Examples include:
-
-•	large accumulations of snow obscuring vegetation → snow_ice;
-•	light/powdery snow with the underlying vegetation clearly visible → underlying vegetation class;
-•	moss growing over rock → visible moss as cryptogam, exposed rock as bare;
-•	vines covering tree foliage → visible vine-covered area as vine;
-•	vegetation in shadow → underlying vegetation class where its features remain identifiable.
+-	large accumulations of snow obscuring vegetation → snow_ice;
+-	light/powdery snow with the underlying vegetation clearly visible → underlying vegetation class;
+-	moss growing over rock → visible moss as cryptogam, exposed rock as bare;
+-	vines covering tree foliage → visible vine-covered area as vine;
+-	vegetation in shadow → underlying vegetation class where its features remain identifiable.
 
 ### Seasonal and dead vegetation
 Where vegetation remains identifiable, seasonal changes should not normally result in a change of class.
@@ -73,8 +72,6 @@ For nearby crowns, clearly visible gaps and spaces between individual leaves sho
 For distant crowns, very small internal gaps can be incorporated into the tree polygon where individual crown components cannot reasonably be resolved.
 ________________________________________
 ## Class Guide
-
-### Key identification and notes
 
 ### Background - 0
 Background includes non-target features such as:
@@ -258,14 +255,14 @@ The general workflow is:
 Select candidate imagery → run model inference → review prediction overlays → select images for annotation → convert predictions to Label Studio polygons → manually review and correct predictions → export corrected annotations → retrain and evaluate
 Model predictions should always be treated as initial annotations rather than ground truth. The same labelling rules described above should be applied when reviewing HITL annotations.
 
-#### 1. Select candidate images
+### 1. Select candidate images
 Begin by selecting a larger pool of images from the new dataset/deployments.
 For example, when aiming to add approximately 250 annotated images, we have used a random sample of approximately 2,500 candidate images for initial model inference.
 These numbers are examples from our workflow rather than fixed requirements and can be adjusted according to the required dataset size and available annotation time.
 Where possible, retain several deployments independently from the HITL process in case additional validation or testing data are required. In our workflow, approximately 2–5 deployments may be retained for this purpose.
 Images subsequently selected and corrected through HITL should be considered part of the model-development process rather than independent test data.
 
-#### 2. Run inference
+### 2. Run inference
 Apply the existing trained segmentation model to the candidate images.
 Generate both:
 -	integer prediction masks; and
@@ -273,7 +270,7 @@ Generate both:
   
 The overlays are useful for rapidly reviewing prediction quality without having to interpret integer-valued masks directly.
 
-#### 3. Select images for annotation
+### 3. Select images for annotation
 Review the prediction overlays and select a mixture of images.
 Selection can include:
 -	images where the model performs well;
@@ -288,7 +285,7 @@ Poorly predicted images may require substantially more annotation effort but can
 Where a prediction is particularly poor, it may be faster and more reliable to delete the predicted polygons and annotate the image from scratch.
 Even predictions that appear accurate should be manually checked before being accepted.
 
-#### 4. Collect selected images and masks
+### 4. Collect selected images and masks
 After selecting the HITL images, collect the corresponding:
 1.	original images;
 2.	integer prediction masks; and
@@ -299,7 +296,7 @@ The following script is used for this step:
 This produces the corresponding files required for the subsequent Label Studio import workflow.
 Important: Ensure that the image index refers to the actual subfolder containing the HITL images.
 
-#### 5. Copy images to the Label Studio image directory
+### 5. Copy images to the Label Studio image directory
 Copy the selected HITL image folder into the directory used to serve the other Label Studio images.
 The subfolder value in the image index must match the name of the folder containing the HITL images. For example:
 image_name	mask_name	subfolder
@@ -307,7 +304,7 @@ SE-KB_1_2023-12-01_120000.jpg	SE-KB_1_2023-12-01_120000.png	SE-KB-HITL-images
 In this example, the selected image should therefore be located within the SE-KB-HITL-images folder.
 Ensure that the folder name and the subfolder entry match before generating the Label Studio JSON, as these are used to construct the image paths for import.
 
-#### 6. Convert prediction masks to Label Studio polygons
+### 6. Convert prediction masks to Label Studio polygons
 Predicted integer masks must be converted into polygon annotations that can be imported into Label Studio.
 The following script performs this conversion:
 **`2-8_HITL-mask-to-JSON.py`**
@@ -316,7 +313,7 @@ The local image server must be running so that Label Studio can access the image
 **`2-1_serve-images-cors.py`**
 This serves the image directory with the required CORS configuration for Label Studio.
 
-#### 7. Polygon extraction settings
+### 7. Polygon extraction settings
 Converting segmentation masks to editable polygons requires a balance between retaining boundary detail and producing polygons that can be efficiently corrected manually.
 
 The following settings were used in our workflow:
@@ -324,7 +321,7 @@ The following settings were used in our workflow:
 MIN_AREA_PX     = 50
 APPROX_EPS_FRAC = 0.0005
 
-##### #Overlap, boundary and splitting controls
+#### #Overlap, boundary and splitting controls
 NO_OVERLAP      = True
 ERODE_PX        = 1
 SPLIT_OPEN_PX   = 2
@@ -351,7 +348,7 @@ A value of 0 disables erosion.
 Applies morphological opening to help separate large connected prediction regions into more manageable components.
 A value of 0 disables this operation.
 
-#### 8. Check overlapping polygons
+### 8. Check overlapping polygons
 During development, importing predictions into Label Studio sometimes resulted in polygons occurring within or overlapping other polygons.
 These can cause problems during subsequent annotation or mask generation.
 Where this occurs:
@@ -359,7 +356,7 @@ Where this occurs:
 •	manually adjust/trace the polygon around the appropriate boundary.
 The overlap and boundary controls described above were introduced to reduce these cases, but imported predictions should still be checked manually.
 
-#### 9. Review and correct annotations
+### 9. Review and correct annotations
 Review each imported prediction using the same class definitions and annotation rules used during manual labelling.
 Corrections can include:
 •	changing incorrect classes;
@@ -370,7 +367,7 @@ Corrections can include:
 •	deleting predictions and annotating from scratch where correction would be more difficult than manual annotation.
 Corrected HITL annotations should ultimately meet the same standard as annotations produced entirely manually.
 
-#### 10. Retrain in batches
+### 10. Retrain in batches
 HITL annotations can be accumulated into batches before retraining rather than continuously retraining after every small number of corrected images.
 For example, several hundred corrected images may be accumulated before another training iteration.
 The appropriate batch size depends on:
@@ -381,7 +378,7 @@ The appropriate batch size depends on:
 •	computational cost of retraining.
 After retraining, the updated model can be used to generate predictions for another HITL iteration.
 
-#### 11. Evaluate performance
+### 11. Evaluate performance
 Evaluate the retrained model on validation and/or test data that have not been incorporated into HITL training.
 An improvement should not necessarily be expected after every HITL iteration.
 A small number of additional training images may not provide sufficient new information to produce a measurable improvement. Similarly, where the validation or test dataset is small, changes in model performance may be difficult to distinguish reliably.
