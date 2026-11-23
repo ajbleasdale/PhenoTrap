@@ -293,7 +293,7 @@ The following script performs this conversion:
 '2-8_HITL-mask-to-JSON.py'
 This creates a JSON file containing the model-generated annotations for import into Label Studio.
 The local image server must be running so that Label Studio can access the images. Use:
-'2-1_serve-images-cors.py'
+"2-1_serve-images-cors.py"
 This serves the image directory with the required CORS configuration for Label Studio.
 
 #### 7. Polygon extraction settings
