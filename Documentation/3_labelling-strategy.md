@@ -293,6 +293,7 @@ After selecting the HITL images, collect the corresponding:
 1.	original images;
 2.	integer prediction masks; and
 3.	prediction overlays.
+   
 The following script is used for this step:
 **`2-7b_HITL-overlay-mask-image-index.py`**
 This produces the corresponding files required for the subsequent Label Studio import workflow.
@@ -317,32 +318,36 @@ This serves the image directory with the required CORS configuration for Label S
 
 #### 7. Polygon extraction settings
 Converting segmentation masks to editable polygons requires a balance between retaining boundary detail and producing polygons that can be efficiently corrected manually.
+
 The following settings were used in our workflow:
-######## Polygon extraction tuning
+#### #Polygon extraction tuning
 MIN_AREA_PX     = 50
 APPROX_EPS_FRAC = 0.0005
 
-####### Overlap, boundary and splitting controls
+##### #Overlap, boundary and splitting controls
 NO_OVERLAP      = True
 ERODE_PX        = 1
 SPLIT_OPEN_PX   = 2
 MIN_AREA_PX
 
-
 Controls the minimum region size retained during polygon extraction.
 Very small predicted regions can generate large numbers of unnecessary polygons and increase annotation time.
-APPROX_EPS_FRAC
+
+#### APPROX_EPS_FRAC
 Controls polygon simplification.
 A polygon that is too complex can retain smooth or detailed boundaries but contain a very large number of points, making manual adjustment difficult.
 Greater simplification makes polygons easier to edit but can reduce boundary detail.
 The value above represents the setting used in our workflow rather than a universally optimal value.
-NO_OVERLAP
+
+#### NO_OVERLAP
 Prevents pixels from being assigned to overlapping polygons from different classes.
 Class priority is determined by PREDICT_CLASSES order.
-ERODE_PX
+
+#### ERODE_PX
 Slightly shrinks predicted regions to reduce boundary overlaps.
 A value of 0 disables erosion.
-SPLIT_OPEN_PX
+
+#### SPLIT_OPEN_PX
 Applies morphological opening to help separate large connected prediction regions into more manageable components.
 A value of 0 disables this operation.
 
