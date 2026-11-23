@@ -275,7 +275,7 @@ After selecting the HITL images, collect the corresponding:
 2.	integer prediction masks; and
 3.	prediction overlays.
 The following script is used for this step:
-2-7b_HITL-overlay-mask-image-index.py
+**`2-7b_HITL-overlay-mask-image-index.py`**
 This produces the corresponding files required for the subsequent Label Studio import workflow.
 Important: Ensure that the image index refers to the actual subfolder containing the HITL images.
 
@@ -290,10 +290,10 @@ Ensure that the folder name and the subfolder entry match before generating the 
 #### 6. Convert prediction masks to Label Studio polygons
 Predicted integer masks must be converted into polygon annotations that can be imported into Label Studio.
 The following script performs this conversion:
-'2-8_HITL-mask-to-JSON.py'
+**`2-8_HITL-mask-to-JSON.py`**
 This creates a JSON file containing the model-generated annotations for import into Label Studio.
 The local image server must be running so that Label Studio can access the images. Use:
-"2-1_serve-images-cors.py"
+**`2-1_serve-images-cors.py`**
 This serves the image directory with the required CORS configuration for Label Studio.
 
 #### 7. Polygon extraction settings
