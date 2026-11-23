@@ -38,7 +38,7 @@ CSV_PATH = Path(
 )
 
 OUTPUT_DIR = Path(
-    r"\\storage-ume.slu.se\home$\arbl0002\My Documents\1_Active\Results\complexity"
+    r"path-to-output-directory"
 )
 
 OUTPUT_DIR.mkdir(
