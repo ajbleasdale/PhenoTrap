@@ -149,9 +149,10 @@ Where there is insufficient evidence even for this distinction, use ignore.
 
 #### Graminoid - 6
 Includes:
-•	grasses;
-•	sedges; and
-•	rushes.
+-	grasses;
+-	sedges; 
+-	rushes.
+  
 Graminoids are generally characterised by long, relatively narrow leaves or blades.
 Brown, senescent or dead graminoid vegetation remains graminoid where its structure can still be identified.
 When distinguishing graminoids from forbs, look for narrower leaves and grass-like structure. Broad leaves and identifiable flowers may provide evidence for forb.
