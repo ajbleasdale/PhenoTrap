@@ -295,6 +295,29 @@ Habitat composition is expressed relative to the entire image, whereas vegetatio
 - **[`5-1d_Shannon-index-single.py`](5_applications/5-1_habitat-composition/5-1d_Shannon-index-single.py)** – Calculates the Shannon index for an individual image.
 - **[`5-1e_composition-Shannon-single-deployment.py`](5_applications/5-1_habitat-composition/5-1e_composition-Shannon-single-deployment.py)** – Summarises composition and Shannon diversity for an individual deployment.
 
+<p align="center">
+  <img src="assets/vegetation_composition_shannon_quadrant.jpg" width="100%"
+       alt="habitat composition over both datasets">
+</p>
+
+<p align="center">
+      <em>Proportional habitat composition (%) and Shannon diversity index (H') over time across the SE-NM and BE-LE datasets.</em>
+</p>
+
+</p>
+
+<p align="center">
+  <img src="assets/vegetation-composition-quadrant.jpg" width="100%"
+       alt="Examples of high and low vegetation-class diversity">
+</p>
+
+<p align="center">
+  <em>Examples of camera-trap imagery, corresponding vegetation-class
+  composition and Shannon diversity index (H′) values for SE-NM
+  (A, C) and BE-LE (B, D). Panels illustrate high (A, B) and low
+  (C, D) visible vegetation-class diversity.</em>
+</p>
+
 ### 5.2 Snow cover
 
 Snow-cover proportion is calculated using ground-cover classes only. PhenoTrap estimates broadly matched previous manual estimates of temporal variation in snow cover.
