@@ -8,10 +8,25 @@ By utilising imagery already collected for wildlife studies, PhenoTrap provides 
 
 **Associated manuscript:** *PhenoTrap: Semantic Segmentation of Environmental and Vegetation Classes in Camera-Trap Imagery* (submitted; not yet published).
 
-<!-- Optional: upload Figure 3 to assets/segmentation-example.png, then uncomment the following image and caption.
-![Original imagery, reference annotations and segmentation predictions](assets/segmentation-example.png)
-*Example original images, reference annotation masks and predicted segmentation masks from SE-NM_84 and BE-LE_1087 (Figure 3).*
--->
+<p align="center">
+  <img src="assets/camera-trap-seasonal-example.jpg"
+       alt="example camera trap imagery"
+       width="100%">
+</p>
+
+<p align="center">
+  <em>Seasonal variation in camera-trap imagery from the two study datasets: A) SE-NM, Sweden, and B) BE-LE, Belgium.</em>
+</p>
+
+<p align="center">
+  <img src="assets/rgb-manual-inference-comparison.jpgg"
+       alt="Example PhenoTrap segmentation"
+       width="100%">
+</p>
+
+<p align="center">
+  <em>Example original images, reference annotation masks and semantic segmentation prediction masks/em>
+</p>
 
 ## Contents
 
@@ -159,10 +174,17 @@ The model achieved the following mean Intersection over Union (mIoU) and frequen
 
 Environmental classes (`sky`, `snow_ice` and `bare`) achieved the highest IoU values. Abundant vegetation classes, including `ericaceous_shrub`, `conifer` and `broadleaf_deciduous`, generally performed well, particularly where they were more strongly represented. Less-abundant classes, including `vine` and `broadleaf_evergreen`, generally performed more poorly.
 
-<!-- Optional: upload Figure S6 and uncomment.
-![Test-set segmentation examples](assets/segmentation-test-examples.png)
-*Original camera-trap images and predicted segmentation masks from the test set, with associated FWIoU and mIoU scores (Figure S6).*
--->
+<p align="center">
+  <img src="assets/cnn-performance-examples.jpg" width="100%"
+       alt="Examples of PhenoTrap segmentation performance">
+</p>
+
+<p align="center">
+  <em>Examples of original camera-trap images and corresponding
+  predicted segmentation masks from the test set, with associated
+  frequency-weighted Intersection over Union (FWIoU) and mean
+  Intersection over Union (mIoU) scores.</em>
+</p>
 
 ## Repository Structure
 
