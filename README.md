@@ -25,7 +25,7 @@ By utilising imagery already collected for wildlife studies, PhenoTrap provides 
 </p>
 
 <p align="center">
-  <em>Example original images, reference annotation masks and semantic segmentation prediction masks/em>
+  <em>Example original images, reference annotation masks and semantic segmentation prediction masks. </em>
 </p>
 
 ## Contents
