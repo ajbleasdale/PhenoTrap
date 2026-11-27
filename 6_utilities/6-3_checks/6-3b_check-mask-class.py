@@ -146,20 +146,31 @@ if __name__ == "__main__":
     # For color masks, map ENCODED RGB ints:
     # Example: pure red (255,0,0) becomes (255<<16 | 0<<8 | 0) = 16711680
     # CLASS_MAP = {0: "background", 16711680: "sky"}  # etc.
-    class_map = {
-        "background": 0,
-        "snow_ice": 1,
-        "low_lying_shrub": 2,
-        "graminoid": 3,
-        "forb": 4,
-        "fern": 5,
-        "lichen_bryophyte": 6,
-        "ground_cover_other": 7,
-        "spruce": 8,
-        "pine": 9,
-        "birch": 10,
-        "ignore": 255,
-    }
+class_map = {
+    "background": 0,
+    "sky": 1,
+    "snow_ice": 2,
+    "bare": 3,
+
+
+    "ericaceous_shrub": 4,
+    "briar_seedling": 5,
+    "graminoid": 6,
+    "forb": 7,
+    "fern": 8,
+
+    "cryptogam": 9,
+
+    "vine": 10,
+    "broadleaf_evergreen": 11,
+
+
+
+    "conifer": 12,
+    "broadleaf_deciduous": 13,
+
+    "ignore": 255,
+}
 
     # Convert to (id -> name) as required by the script
     ID_TO_CLASS = {v: k for k, v in class_map.items()}
