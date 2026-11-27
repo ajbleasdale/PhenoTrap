@@ -19,7 +19,7 @@ By utilising imagery already collected for wildlife studies, PhenoTrap provides 
 </p>
 
 <p align="center">
-  <img src="assets/rgb-manual-inference-comparison.jpgg"
+  <img src="assets/rgb-manual-inference-comparison.jpg"
        alt="Example PhenoTrap segmentation"
        width="100%">
 </p>
