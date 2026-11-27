@@ -1,0 +1,174 @@
+
+# Delete files from a folder if their filename is NOT listed in a spreadsheet
+# -----------------------------------------------------------------------------
+# - Reads filenames from an Excel spreadsheet
+# - Compares them against files in a folder
+# - Reports how many files would be deleted
+# - Uses a safety toggle so you can dry-run first before actually deleting
+#
+# Notes:
+# - Edit the paths and settings in the CONFIG section
+# - By default, this script does NOT delete anything
+# - It matches by filename only, not full path
+
+import os
+from pathlib import Path
+import pandas as pd
+
+# =============================================================================
+# CONFIG
+# =============================================================================
+folder_path = r"path-to-image-directory"
+spreadsheet_path = r"path-to-metadata-csv.csv"
+
+# Column in the spreadsheet that contains the filenames
+filename_column = "image_name"
+
+# Allowed spreadsheet types: ".xlsx", ".xls", ".csv"
+spreadsheet_type = ".xlsx"
+
+# File extensions in the folder to check
+allowed_extensions = {".jpg", ".jpeg", ".png", ".tif", ".tiff", ".bmp"}
+
+# Toggle:
+
+# Toggle deletion modes
+DELETE_NOT_IN_SPREADSHEET = False   # delete files NOT listed
+DELETE_IN_SPREADSHEET = True      # delete files that ARE listed
+COMMIT_DELETE = True # False = preview only, no files deleted  True  = actually delete files
+
+# Optional:
+# True  = compare filenames ignoring extension
+# False = compare full filename including extension
+MATCH_BY_STEM_ONLY = False
+
+# Optional:
+# True  = print every file that would be deleted
+# False = only print summary counts
+PRINT_FILES_TO_DELETE = True
+
+
+# =============================================================================
+# LOAD SPREADSHEET
+# =============================================================================
+def load_spreadsheet(path):
+    ext = Path(path).suffix.lower()
+
+    if ext == ".csv":
+        df = pd.read_csv(path)
+    elif ext in [".xlsx", ".xls"]:
+        df = pd.read_excel(path)
+    else:
+        raise ValueError(f"Unsupported spreadsheet type: {ext}")
+
+    return df
+
+
+# =============================================================================
+# MAIN
+# =============================================================================
+def main():
+    folder = Path(folder_path)
+    sheet = Path(spreadsheet_path)
+
+    if not folder.exists():
+        raise FileNotFoundError(f"Folder not found: {folder}")
+
+    if not sheet.exists():
+        raise FileNotFoundError(f"Spreadsheet not found: {sheet}")
+
+    df = load_spreadsheet(sheet)
+
+    if filename_column not in df.columns:
+        raise ValueError(
+            f"Column '{filename_column}' not found in spreadsheet.\n"
+            f"Available columns: {list(df.columns)}"
+        )
+
+    # Get filenames from spreadsheet
+    spreadsheet_names_raw = (
+        df[filename_column]
+        .dropna()
+        .astype(str)
+        .str.strip()
+        .tolist()
+    )
+
+    if MATCH_BY_STEM_ONLY:
+        valid_names = {Path(name).stem for name in spreadsheet_names_raw}
+    else:
+        valid_names = {Path(name).name for name in spreadsheet_names_raw}
+
+    # Get files from folder
+    folder_files = [
+        f for f in folder.iterdir()
+        if f.is_file() and f.suffix.lower() in allowed_extensions
+    ]
+
+    # Find files to delete
+    # Find files based on spreadsheet match
+    files_in_spreadsheet = []
+    files_not_in_spreadsheet = []
+
+    for f in folder_files:
+        compare_name = f.stem if MATCH_BY_STEM_ONLY else f.name
+
+        if compare_name in valid_names:
+            files_in_spreadsheet.append(f)
+        else:
+            files_not_in_spreadsheet.append(f)
+
+    # Decide what to delete based on toggles
+    files_to_delete = []
+
+    if DELETE_NOT_IN_SPREADSHEET:
+        files_to_delete.extend(files_not_in_spreadsheet)
+
+    if DELETE_IN_SPREADSHEET:
+        files_to_delete.extend(files_in_spreadsheet)
+
+    # Remove duplicates if both toggles somehow overlap
+    files_to_delete = list(set(files_to_delete))
+
+    # Report
+    print("=" * 70)
+    print("CHECK COMPLETE")
+    print("=" * 70)
+    print(f"Folder checked: {folder}")
+    print(f"Spreadsheet:    {sheet}")
+    print(f"Filename column:{filename_column}")
+    print(f"Match by stem:  {MATCH_BY_STEM_ONLY}")
+    print(f"Files in folder checked: {len(folder_files)}")
+    print(f"Files IN spreadsheet:     {len(files_in_spreadsheet)}")
+    print(f"Files NOT in spreadsheet: {len(files_not_in_spreadsheet)}")
+    print(f"Total files marked for deletion: {len(files_to_delete)}")
+    print(f"Delete NOT in spreadsheet: {DELETE_NOT_IN_SPREADSHEET}")
+    print(f"Delete IN spreadsheet:     {DELETE_IN_SPREADSHEET}")
+    print("=" * 70)
+
+    if PRINT_FILES_TO_DELETE and files_to_delete:
+        print("\nFiles that would be deleted:\n")
+        for f in files_to_delete:
+            print(f.name)
+
+    if not COMMIT_DELETE:
+        print("\nDRY RUN ONLY")
+        print("No files were deleted.")
+        print("Set COMMIT_DELETE = True to actually remove them.")
+        return
+
+    # Delete files
+    deleted_count = 0
+    for f in files_to_delete:
+        try:
+            os.remove(f)
+            deleted_count += 1
+        except Exception as e:
+            print(f"Could not delete {f.name}: {e}")
+
+    print("\nDELETE COMPLETE")
+    print(f"Files deleted: {deleted_count}")
+
+
+if __name__ == "__main__":
+    main()
